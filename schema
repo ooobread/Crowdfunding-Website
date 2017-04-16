@@ -1,4 +1,4 @@
-User (UID,pwd,hometown,interests, credit_card)
+User (UID,name, pwd,hometown,interests, credit_card)
 PROJECT(PID,name,description,tag, samples,  min_fund, max_fund, end_time, comp_time,status)
 FUND(PID,UID,date)
 DONATE(UID,PID,amount,date,comp_time)
