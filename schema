@@ -19,3 +19,13 @@ where PROJECT.status = 'open'
 AND tag LIKE "%jazz%" 
 order by FUND.date DESC
 
+
+(5). select comments
+from comment
+where UID in(
+select UID2
+from follow
+where UID1 in (select UID from user where uname = "BobInBrooklyn")
+)
+(6). insert into PROJECT (PID, Pname, description, tag, min_fund,max_fund,end_time,comp_time) 
+values (2,'NeedMoney', 'good','jazz', 100,200,'2017-01-01','2017,05-05') 
