@@ -19,7 +19,18 @@ where PROJECT.status = 'open'
 AND tag LIKE "%jazz%" 
 order by FUND.date DESC
 
-
+(4). select UID, uname 
+from user 
+where UID in (  select UID 
+				        from fund 
+                group by UID
+                having count(*) >3
+				      ) 
+AND UID IN (select UID 
+            from Rate 
+            group by PID 
+            having AVG(score) >= 4
+            )
 (5). select comments
 from comment
 where UID in(
@@ -29,3 +40,5 @@ where UID1 in (select UID from user where uname = "BobInBrooklyn")
 )
 (6). insert into PROJECT (PID, Pname, description, tag, min_fund,max_fund,end_time,comp_time) 
 values (2,'NeedMoney', 'good','jazz', 100,200,'2017-01-01','2017,05-05') 
+(7). insert into donate (UID,PID,amount,date) values (2,2,100,'2017-02-01')
+(8). 
