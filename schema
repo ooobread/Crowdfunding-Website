@@ -8,14 +8,10 @@ Like(UID,PID)
 Follow(UID1,UID2)
 Rate(UID,PID,score)
 
+User table contains the information of each user who has a user ID, username, password, hometown, interests and credit card number.
+Project entity has the attributes of Project ID, project name, description. Tag is the category of the project. Min_fund and max_fund are the bottom and upper bounds of the amount of money the project needs. End_time is the due time of the project and comp_time is the date the project complete its crowdfunding. Status is the condition of the project wheather it is open or closed.
 
 
+(1). INSERT INTO USER (UID,uname,pwd)VALUES (1,'Tom','tom888')
 
 
-Project --- samples,  min_fund, max_fund, end_time, comp_time
-Project_update --- updates, materials, comments, rates
-User --- hometown, interests, credit card, etc , post comments on projects, and pledge funds for a project. post new projects and ask for funds for these projects.
-Projects should probably have a name and description, and maybe some tags or category labels, and owners of projects should be able to add new entries with updates about the project, containing text and multimedia data (mp3s, pictures, movies) about the project
-
-When a project is successfully funded, a charge to the credit cards of the sponsors should be created and recorded.
-Users should be able to like a project, and should be able to follow other users. That way, users can easily see all the comments, pledges, and likes of the users that they follow.
