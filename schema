@@ -18,7 +18,17 @@ from project natural join FUND
 where PROJECT.status = 'open'
 AND tag LIKE "%jazz%" 
 order by FUND.date DESC
-
+(3). select uname 
+from user 
+where UID in (select UID 
+	      from Donate
+              where PID in(
+			  select PID 
+                	  from project
+                	  where tag LIKE "%jazz%"
+                	  group by UID, PID
+                	  order by sum(amount) 
+                		))
 (4). select UID, uname 
 from user 
 where UID in (  select UID 
