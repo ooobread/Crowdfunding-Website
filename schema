@@ -52,3 +52,16 @@ where UID1 in (select UID from user where uname = "BobInBrooklyn")
 values (2,'NeedMoney', 'good','jazz', 100,200,'2017-01-01','2017,05-05') 
 (7). insert into donate (UID,PID,amount,date) values (2,2,100,'2017-02-01')
 (8). 
+delimiter // 
+CREATE EVENT my_event
+  ON SCHEDULE
+    EVERY 5 second ON COMPLETION PRESERVE
+  do
+    begin
+     update PROJECT SET 
+		pstatus = case 
+		when now() > project.end_time then 'close'
+		
+        end;
+    end
+//
