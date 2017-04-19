@@ -1,5 +1,5 @@
 User (UID,name, pwd,hometown,interests, credit_card)
-PROJECT(PID,name,description,tag, samples,  min_fund, max_fund, end_time, comp_time,status)
+PROJECT(PID,name,description,tag, samples,  min_fund, max_fund, end_time, comp_time,pstatus)
 FUND(PID,UID,date)
 DONATE(UID,PID,amount,date,comp_time)
 COMMENT(UID,PID,comments,date)
