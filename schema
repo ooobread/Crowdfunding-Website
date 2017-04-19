@@ -14,9 +14,9 @@ Project entity has the attributes of Project ID, project name, description. Tag 
 
 (1). INSERT INTO USER (UID,uname,pwd)VALUES (1,'Tom','tom888')
 (2). select *
-from project natural join FUND
-where PROJECT.status = 'open'
-AND tag LIKE "%jazz%" 
+from project left join FUND on project.PID = fund.PID
+where PROJECT.pstatus = 'pending'
+AND description LIKE "%jazz%" 
 order by FUND.date DESC
 (3). select uname 
 from user 
