@@ -13,12 +13,15 @@ Project entity has the attributes of Project ID, project name, description. Tag 
 
 
 (1). INSERT INTO USER (UID,uname,pwd)VALUES (1,'Tom','tom888')
-(2). select *
+(2). 
+select *
 from project left join FUND on project.PID = fund.PID
 where PROJECT.pstatus = 'pending'
 AND description LIKE "%jazz%" 
 order by FUND.date DESC
-(3). select uname 
+
+(3). 
+select uname 
 from user 
 where UID in (select UID 
 	      from Donate
@@ -29,7 +32,8 @@ where UID in (select UID
                 	  group by UID, PID
                 	  order by sum(amount) 
                 		))
-(4). select UID, uname 
+(4). 
+select UID, uname 
 from user 
 where UID in (  select UID 
 				        from fund 
@@ -41,16 +45,19 @@ AND UID IN (select UID
             group by PID 
             having AVG(score) >= 4
             )
-(5). select comments
+(5).
+select comments
 from comment
 where UID in(
 select UID2
 from follow
 where UID1 in (select UID from user where uname = "BobInBrooklyn")
 )
-(6). insert into PROJECT (PID, Pname, description, tag, min_fund,max_fund,end_time,comp_time) 
+(6). 
+insert into PROJECT (PID, Pname, description, tag, min_fund,max_fund,end_time,comp_time) 
 values (2,'NeedMoney', 'good','jazz', 100,200,'2017-01-01','2017,05-05') 
-(7). insert into donate (UID,PID,amount,date) values (2,2,100,'2017-02-01')
+(7). 
+insert into donate (UID,PID,amount,date) values (2,2,100,'2017-02-01')
 (8). 
 delimiter // 
 CREATE EVENT my_event
