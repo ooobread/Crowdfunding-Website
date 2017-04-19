@@ -60,8 +60,8 @@ CREATE EVENT my_event
     begin
      update PROJECT SET 
 		pstatus = case 
-		when now() > project.end_time then 'close'
-		
+		when now() > project.end_time and pstatus != 'complete'then 'close'
+		when now() <= project.end_time and pstatus != 'complete' then 'pending'
         end;
     end
 //
