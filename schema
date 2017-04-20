@@ -1,5 +1,5 @@
 User (UID,name, pwd,hometown,interests, credit_card)
-PROJECT(PID,name,description,tag, samples,  min_fund, max_fund, end_time, comp_time,status)
+PROJECT(PID,name,description,tag, samples,  min_fund, max_fund, end_time, comp_time,pstatus)
 FUND(PID,UID,date)
 DONATE(UID,PID,amount,date,comp_time)
 COMMENT(UID,PID,comments,date)
@@ -8,14 +8,67 @@ Like(UID,PID)
 Follow(UID1,UID2)
 Rate(UID,PID,score)
 
+User table contains the information of each user who has a user ID, username, password, hometown, interests and credit card number.
+Project entity has the attributes of Project ID, project name, description. Tag is the category of the project. Min_fund and max_fund are the bottom and upper bounds of the amount of money the project needs. End_time is the due time of the project and comp_time is the date the project complete its crowdfunding. Status is the condition of the project wheather it is ‘pending’ ‘closed’ or 'completed'.
 
 
+(1). INSERT INTO USER (UID,uname,pwd)VALUES (1,'Tom','tom888')
+(2). 
+select *
+from project left join FUND on project.PID = fund.PID
+where PROJECT.pstatus = 'pending'
+AND description LIKE "%jazz%" 
+order by FUND.date DESC
 
-
-Project --- samples,  min_fund, max_fund, end_time, comp_time
-Project_update --- updates, materials, comments, rates
-User --- hometown, interests, credit card, etc , post comments on projects, and pledge funds for a project. post new projects and ask for funds for these projects.
-Projects should probably have a name and description, and maybe some tags or category labels, and owners of projects should be able to add new entries with updates about the project, containing text and multimedia data (mp3s, pictures, movies) about the project
-
-When a project is successfully funded, a charge to the credit cards of the sponsors should be created and recorded.
-Users should be able to like a project, and should be able to follow other users. That way, users can easily see all the comments, pledges, and likes of the users that they follow.
+(3). 
+select uname 
+from user 
+where UID in (select UID 
+	      from Donate
+              where PID in(
+			  select PID 
+                	  from project
+                	  where tag LIKE "%jazz%"
+                	  group by UID, PID
+                	  order by sum(amount) 
+                		))
+(4). 
+select UID, uname 
+from user 
+where UID in (  select UID 
+				        from fund 
+                group by UID
+                having count(*) >3
+				      ) 
+AND UID IN (select UID 
+            from Rate 
+            group by PID 
+            having AVG(score) >= 4
+            )
+(5).
+select comments
+from comment
+where UID in(
+select UID2
+from follow
+where UID1 in (select UID from user where uname = "BobInBrooklyn")
+)
+(6). 
+insert into PROJECT (PID, Pname, description, tag, min_fund,max_fund,end_time,comp_time) 
+values (2,'NeedMoney', 'good','jazz', 100,200,'2017-01-01','2017,05-05') 
+(7). 
+insert into donate (UID,PID,amount,date) values (2,2,100,'2017-02-01')
+(8). 
+delimiter // 
+CREATE EVENT my_event
+  ON SCHEDULE
+    EVERY 5 second ON COMPLETION PRESERVE
+  do
+    begin
+     update PROJECT SET 
+		pstatus = case 
+		when now() > project.end_time and pstatus != 'complete'then 'close'
+		when now() <= project.end_time and pstatus != 'complete' then 'pending'
+        end;
+    end
+//
