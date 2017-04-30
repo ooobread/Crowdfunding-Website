@@ -1,0 +1,274 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"s1_",
+				"s1_match1"
+			],
+			[
+				"data",
+				"datapath"
+			],
+			[
+				"if",
+				"ifmain\tif __name__ == '__main__'"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 490.0,
+		"last_filter": "Package Control: ",
+		"selected_items":
+		[
+			[
+				"Package Control: ",
+				"Package Control: Remove Package"
+			],
+			[
+				"Package Control: install",
+				"Package Control: Install Package"
+			],
+			[
+				"install package",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 593.0
+	},
+	"console":
+	{
+		"height": 162.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = 'df21e130d211cfc94d9b0905775a7c0f' + '1e3d39e33b79698005270310898eea76'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/E/files/NYU/Data Center and cloud computing/Lab4/test2.py",
+		"/E/files/NYU/Data Center and cloud computing/Lab5/lab5/conf1.sh",
+		"/E/files/NYU/Data Center and cloud computing/Lab5/lab5/conf2.sh",
+		"/E/files/NYU/其他/2017 FALL.txt",
+		"/G/default-capability.xml",
+		"/G/Information.txt",
+		"/E/files/NYU/Data Center and cloud computing/Lab5/lab5/lab5_topo.py",
+		"/E/files/NYU/Data Center and cloud computing/Lab5/lab5/sp.py",
+		"/E/files/NYU/Data Center and cloud computing/Lab5/lab5/sp2.py",
+		"/C/xampp/apache/conf/httpd.conf",
+		"/E/files/NYU/Data Center and cloud computing/Lab5/lab5/test.sh",
+		"/E/files/NYU/Data Center and cloud computing/Lab5/lab5/start.sh",
+		"/E/3ds/index.html",
+		"/E/3ds/IOHH-0025-Ridge Racers 3D.3ds/IOHH-0025-Ridge Racers 3D/山脊赛车3D游戏说明.txt",
+		"/E/3ds/逆转裁判5完美汉化版3DS_CIA/逆转5字幕文件/使用前必读.txt",
+		"/E/software/excel2latex/README.md",
+		"/E/files/各科课件/Software Engineering/大作业/说明.txt",
+		"/C/Users/lin_w/Dropbox/Lab4/test2.py",
+		"//3DS-BREAD/microSD/luma/locals/000400000014AD00.txt",
+		"//3DS-BREAD/microSD/luma/locals/0004000000166A00.txt",
+		"/E/files/NYU/Data Center and cloud computing/Lab4/topo.py",
+		"/C/Users/lin_w/AppData/Roaming/syntevo/SmartGit/8/settings.xml",
+		"/E/SQL/schema.txt",
+		"/E/files/NYU/Data Center and cloud computing/Lab4/sp.py",
+		"/E/files/NYU/Data Center and cloud computing/Lab2/test_3.sh",
+		"/E/files/NYU/Data Center and cloud computing/Lab4/Example.py",
+		"/E/files/NYU/Principles of Database/marketplace.txt",
+		"/E/files/NYU/Principles of Database/Homework 3/Readme.txt",
+		"/E/files/NYU/Principles of Database/ps2dataset.txt",
+		"/C/xampp/apache/ABOUT_APACHE.txt",
+		"/E/Eclipse Workspace/Homework3/test.html",
+		"/E/files/NYU/Principles of Database/PHP-examples/PHP-examples/authentication.inc",
+		"/E/eula.1028.txt",
+		"/C/uninstall.txt",
+		"/E/files/NYU/Labs/hadoop-2.7.3/etc/hadoop/hadoop-env.sh",
+		"/E/files/NYU/Data Center and cloud computing/Lab3/wordCountText.txt",
+		"/E/software/httpd-2.4.25-win64-VC14/ReadMe.txt",
+		"/C/php/install.txt",
+		"/C/Apache24/conf/httpd.conf",
+		"/E/software/httpd-2.4.25-win64-VC14/Apache24/INSTALL.txt",
+		"/E/software/httpd-2.4.25-win64-VC14/-- Win64-2.4.25 VC14  --",
+		"/E/files/NYU/Principles of Database/PHP-examples/PHP-examples/authenticateUser.php.txt",
+		"/C/Users/lin_w/AppData/Local/Temp/Temp1_PHP-examples.zip/PHP-examples/menu-example.php.txt",
+		"/C/Users/lin_w/Dropbox/Lab3/count.py",
+		"/E/software/hadoop-2.7.3.tar/hadoop-2.7.3/etc/hadoop/yarn-env.sh",
+		"/E/files/NYU/Data Center and cloud computing/Lab3/hadoop-2.7.3/etc/hadoop/hadoop-env.cmd",
+		"/E/files/NYU/Data Center and cloud computing/Lab3/hadoop-2.7.3/etc/hadoop/hadoop-env.sh",
+		"/E/software/hadoop-2.7.3.tar/hadoop-2.7.3/etc/hadoop/hadoop-env.sh",
+		"/E/software/hadoop-2.7.3.tar/hadoop-2.7.3/etc/hadoop/core-site.xml",
+		"/F/Skyrim/language.txt",
+		"/E/files/NYU/Labs/hadoop-2.7.3/etc/hadoop/hadoop-env.cmd",
+		"/E/files/NYU/Labs/hadoop-2.7.3/etc/hadoop/hadoop-policy.xml",
+		"/E/files/NYU/Data Center and cloud computing/Lab3/hadoop-2.7.3/etc/hadoop/core-site.xml",
+		"/E/files/NYU/Data Center and cloud computing/Lab3/hadoop-2.7.3/etc/hadoop/yarn-site.xml",
+		"/E/files/NYU/Data Center and cloud computing/Lab3/hadoop-2.7.3/etc/hadoop/httpfs-env.sh",
+		"/E/files/NYU/Data Center and cloud computing/Lab3/hadoop-2.7.3/etc/hadoop/mapred-site.xml",
+		"/E/files/NYU/Data Center and cloud computing/Lab3/hadoop-2.7.3/etc/hadoop/slaves",
+		"/E/files/NYU/Data Center and cloud computing/Lab3/hadoop-2.7.3/etc/hadoop/hdfs-site.xml",
+		"/E/files/NYU/Data Center and cloud computing/Lab2/fat_tree_mininet.py",
+		"/E/files/NYU/Data Center and cloud computing/Lab2/fat_tree.py",
+		"/E/software/sqldeveloper-4.1.5.21.78-x64/sqldeveloper/sqldeveloper.sh",
+		"/E/files/NYU/Data Center and cloud computing/Lab2/lab2.py",
+		"/E/files/NYU/Principles of Database/Homework 2/ps2dataset.txt",
+		"/E/files/NYU/Principles of Database/data.sql",
+		"/C/Users/lin_w/Dropbox/Lab2/fat_tree.py",
+		"/E/files/NYU/Data Center and cloud computing/Lab2/topology.py",
+		"/E/files/NYU/Data Center and cloud computing/Lab2/customized.py",
+		"/E/files/NYU/Data Center and cloud computing/Lab2/lab2_custom.py",
+		"/E/files/NYU/Data Center and cloud computing/Lab2/test.sh",
+		"/C/Users/lin_w/AppData/Local/Packages/microsoft.windowscommunicationsapps_8wekyb3d8bbwe/LocalState/Files/S0/911/test[974].sh",
+		"/E/files/NYU/Data Center and cloud computing/Lab2/simple.py",
+		"/E/files/NYU/Advanced Hardware Design/ASM/rc5.asm"
+	],
+	"find":
+	{
+		"height": 27.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"`",
+			"root",
+			"%USERNAME%",
+			"datetime",
+			"`"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"",
+			"lin_w",
+			"timestamp",
+			""
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 26.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "Login.sublime-project",
+	"replace":
+	{
+		"height": 50.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"E:\\SQL\\web\\web\\views\\layout.jade"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 188.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

@@ -26,10 +26,6 @@ app.use(express.static(path.join(__dirname, 'static_views')));
 app.use('/', index);
 app.use('/users', users);
 
-//app.get('/', function(req, res) {
-//	res.sendFile(path.join(__dirname + '/public/Login.html'));
-//});
-
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

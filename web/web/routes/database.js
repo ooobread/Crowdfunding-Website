@@ -16,9 +16,9 @@ exports.query = function(sql, sqlparams, results){
 			return;
 		}
 		else{
-			//console.log('Results : ', data);
 			results(data);
 			connection.end();
+			return;
 		}
 	});
 };

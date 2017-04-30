@@ -3,19 +3,19 @@ var router = express.Router();
 var db = require('./database.js');
 var path    = require('path');
 
-/* GET users listing. */
 router.get('/checklogin', function(req, res, next) {
   var username = req.inputUserName;
   var password = req.inputPassword;
-  var sql = 'select * from user where ? in (select name from user) and ? in (select pwd from user)' ;
-  var sqlParams = [username, password];
+  var sql = 'select uid from user where ? in (select name from user) and ? in (select pwd from user where name= ? )' ;
+  var sqlParams = [username, password, username];
   db.query(sql, sqlParams, function(results){
+    console.log(results);
 	  if(results == ''){
-  		console.log('Not exist!!!');
-  		res.alert('Not exist!');
+  		res.locals.error('User Name or Password Error!');
+  		res.render('Login');
   	}
   	else{
-  		//console.log('users.js');
+  		res.locals.success('Success!!')
   		res.sendFile(path.join(__dirname, '../static_views/StartPage.html'));
  	}
   });
