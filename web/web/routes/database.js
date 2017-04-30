@@ -6,19 +6,19 @@ var connection = mysql.createConnection({
   database : 'project'
 });
  
-connection.connect();
+//connection.connect();
 
 exports.query = function(sql, sqlparams, results){
 	connection.query(sql, sqlparams, function (error, data) {
 		if (error){
 			throw error;
-			connection.end();
-			return;
+			//connection.end();
+			//return;
 		}
 		else{
 			results(data);
-			connection.end();
-			return;
+			//connection.end();
+			//return;
 		}
 	});
 };

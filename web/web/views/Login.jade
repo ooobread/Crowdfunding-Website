@@ -18,17 +18,20 @@ html(lang='en')
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
   body
     .container
-      form.form-signin(moethod='POST', action='/users/checklogin')
+      form.form-signin(method='POST', action='/users/checklogin')
         h2.form-signin-heading Please log in
         label.sr-only(for='inputUserName') User Name
-        input#inputUserName.form-control(type='text', placeholder='User Name', required='', autofocus='')
+        input#inputUserName.form-control(type='text', name='inputUserName', placeholder='User Name', required='', autofocus='')
         label.sr-only(for='inputPassword') Password
-        input#inputPassword.form-control(type='password', placeholder='Password', required='')
-        .checkbox
+        input#inputPassword.form-control(type='password', name='inputPassword', placeholder='Password', required='')
+        //.checkbox
           label
             input(type='checkbox', value='remember-me')
             |  Remember me
         button.btn.btn-lg.btn-primary.btn-block(type='submit') Sign in
-        .alert.alert-dismissable.alert-warning
-            button.close(type='button', data-dismiss='alert', aria-hidden='true') ×
-            res.locals.error
+        - console.log(message);
+        - if(message == 'again')
+          .alert.alert-dismissable.alert-warning
+            h1 Please enter again!
+
+        
