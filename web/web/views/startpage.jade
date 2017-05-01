@@ -78,7 +78,7 @@ html(lang='en')
         .col-md-3.column
           h1 Menu List
           .list-group
-            a.list-group-item(href='/manage/projects') Your Projects
+            a.list-group-item(href='/manage/get_projects_description') Your Projects
             a.list-group-item(href='#') Pledges
             a.list-group-item(href='#') Comments
             a.list-group-item(href='#') Likes
@@ -86,13 +86,13 @@ html(lang='en')
         .col-md-9.column
             #panel-783993.panel-group
               #projects
-                - console.log('startpage: ');
+                //- console.log('startpage: '+pname.name);
                 if pname
                    each name in pname
                       .panel.panel-default
                         .panel-heading
-                          a.panel-title(data-toggle='collapse', data-parent='#panel-783993', href='#panel-element-783281') #{name.name}
-                        #panel-element-783281.panel-collapse.in
+                          a.panel-title(data-toggle='collapse', data-parent='#panel-783993', href='#'+name.name) #{name.name}
+                        div(id = name.name, class = 'panel-collapse.in')
                           .panel-body
                             | #{name.description}
                 else

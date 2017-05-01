@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var db = require('./database.js');
 
-router.get('/projects', function(req, res, next) {
+router.get('/get_projects_description', function(req, res, next) {
 	var sql = 'select name, description from project where uid = ?' ;
  	var sqlParams = [req.session.user];
  	//console.log(sqlParams);
