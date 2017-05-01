@@ -1,12 +1,12 @@
 var express = require('express');
 var router = express.Router();
 var db = require('./database.js');
-var path    = require('path');
+//var path    = require('path');
 
 router.post('/checklogin', function(req, res, next) {
   var username = req.body.inputUserName;
   var password = req.body.inputPassword;
-  var sql = 'select uid from user where ? in (select name from user) and ? in (select pwd from user where name= ? )' ;
+  var sql = 'select uid from user where ? in (select uid from user) and ? in (select pwd from user where uid= ? )' ;
   var sqlParams = [username, password, username];
   //console.log(req.body.inputUserName);
   //console.log(req.body.inputPassword);
@@ -19,8 +19,12 @@ router.post('/checklogin', function(req, res, next) {
   	}
   	else{
       console.log('Success!');
-  		//res.locals.success('Success!!')
-  		res.sendFile(path.join(__dirname, '../static_views/StartPage.html'));
+      req.session.user = username;
+      req.session.pwd = password;
+      //console.log(req.session.user);
+      //console.log(req.session.pwd);
+  		//res.locals.success('Success!!');
+  		res.render('startpage');
  	}
   });
 });
