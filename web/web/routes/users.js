@@ -7,11 +7,12 @@ router.post('/checklogin', function(req, res, next) {
   var username = req.body.inputUserName;
   var password = req.body.inputPassword;
   var sql = 'select uid from user where ? in (select uid from user) and ? in (select pwd from user where uid= ? )' ;
-  var sqlParams = [username, password, username];
+  var sqlparams_results = [username];
+  var sqlparams_condition = [password, username];
+  var sqlparams = sqlparams_results.concat(sqlparams_condition);
   //console.log(req.body.inputUserName);
   //console.log(req.body.inputPassword);
-  db.query(sql, sqlParams, function(results){
-    console.log(results);
+  db.query(sql, sqlparams, function(results){
 	  if(results == ''){
       console.log('Error!');
   		//res.locals.error = 'User Name or Password Error!';
@@ -21,6 +22,7 @@ router.post('/checklogin', function(req, res, next) {
       console.log('Success!');
       req.session.user = username;
       req.session.pwd = password;
+      //console.log(results[0].uid);
       //console.log(req.session.user);
       //console.log(req.session.pwd);
   		//res.locals.success('Success!!');

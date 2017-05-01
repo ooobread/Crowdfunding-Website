@@ -86,19 +86,15 @@ html(lang='en')
         .col-md-9.column
             #panel-783993.panel-group
               #projects
+                - console.log('startpage: ');
                 if pname
-                  .panel.panel-default
-                    .panel-heading
-                      a.panel-title(data-toggle='collapse', data-parent='#panel-783993', href='#panel-element-783281') Collapsible Group Item #1
-                    #panel-element-783281.panel-collapse.in
-                      .panel-body
-                        | #{pname}
-                  .panel.panel-default
-                    .panel-heading
-                      a.panel-title.collapsed(data-toggle='collapse', data-parent='#panel-783993', href='#panel-element-630462') Collapsible Group Item #2
-                    #panel-element-630462.panel-collapse.collapse
-                      .panel-body
-                        | Anim pariatur cliche...
+                   each name in pname
+                      .panel.panel-default
+                        .panel-heading
+                          a.panel-title(data-toggle='collapse', data-parent='#panel-783993', href='#panel-element-783281') #{name.name}
+                        #panel-element-783281.panel-collapse.in
+                          .panel-body
+                            | #{name.description}
                 else
                   h1 You have no projects.
 
