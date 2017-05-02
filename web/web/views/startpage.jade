@@ -14,17 +14,70 @@ block content
             a.list-group-item(href='/account/likes') My Likes
             a.list-group-item(href='/account/rates') My Rates
         .col-md-9.column
-          #panel-783993.panel-group
-            #projects
-              //- console.log('session: '+session);
-              if projects
-                each project in projects
+          //- console.log(projects);
+          //- console.log(following); 
+          //- console.log(follower);
+          if projects
+            h1 Projects
+            //- console.log('session: '+session);
+            #panel-783993.panel-group
+              #display-panel
+                for project in projects
                   .panel.panel-default
                     .panel-heading
                       a.panel-title(data-toggle='collapse', data-parent='#panel-783993', href='#'+project.name) #{project.name}
                     div(id = project.name, class = 'panel-collapse.in')
                       .panel-body
                         | #{project.description}
-                else
-                  h1 You have no projects.
+          else if following
+            h1 Following
+            for user2 in following
+              .col-md-4.column
+                .media
+                  .media-left.media-left
+                    a(href='#')
+                      img.media-object(src='...', alt='...')
+                    .media-body
+                      h4.media-heading #{user2.name}
+                      |     ...
+          else if follower
+            h1 Followers
+            for user1 in follower
+              .col-md-4.column
+                .media
+                  .media-left.media-left
+                    a(href='#')
+                      img.media-object(src='...', alt='...')
+                    .media-body
+                      h4.media-heading #{user1.name}
+                      |     ...
+
+          else if pledge
+            h1 Pledges
+            #panel-783993.panel-group
+              #display-panel
+                for project in pledge
+                  .panel.panel-default
+                    .panel-heading
+                      a.panel-title(data-toggle='collapse', data-parent='#panel-783993', href='#'+project.name) #{project.name}
+                    div(id = project.name, class = 'panel-collapse.in')
+                      .panel-body
+                        | #{project.description}
+          else if projects
+            h1 Projects
+            //- console.log('session: '+session);
+            #panel-783993.panel-group
+              #display-panel
+                for project in projects
+                  .panel.panel-default
+                    .panel-heading
+                      a.panel-title(data-toggle='collapse', data-parent='#panel-783993', href='#'+project.name) #{project.name}
+                    div(id = project.name, class = 'panel-collapse.in')
+                      .panel-body
+                        | #{project.description}
+          else
+            h1 No elements
+
+
+                    
     
