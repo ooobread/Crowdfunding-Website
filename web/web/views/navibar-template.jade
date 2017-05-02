@@ -18,6 +18,13 @@ html(lang='en')
     script(src='http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js')
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
+    <!-- (Optional) Latest compiled and minified JavaScript translation files -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/i18n/defaults-*.min.js"></script>
+
   body
     .container
       .row.clearfix
@@ -33,40 +40,26 @@ html(lang='en')
             #bs-example-navbar-collapse-1.collapse.navbar-collapse
               ul.nav.navbar-nav
                 li.active
-                  a(href='#') Link
+                  a(href='#') Index
                 li
                   a(href='#') Link
-                li.dropdown
-                  a.dropdown-toggle(href='#', data-toggle='dropdown')
-                    | Navigation
-                    strong.caret
-                  ul.dropdown-menu
-                    li
-                      a(href='#') Action
-                    li
-                      a(href='#') Another action
-                    li
-                      a(href='#') Something else here
-                    li.divider
-                    li
-                      a(href='#') Separated link
-                    li.divider
-                    li
-                      a(href='#') One more separated link
-              form.navbar-form.navbar-left(role='search')
-                .form-group
-                  input.form-control(type='text', placeholder='Search Projects')
+              form.navbar-form.navbar-left(role='search', method='get', action='#')
+                select.selectpicker(data-width='fit')
+                  option By Project Name
+                  option By Project Tag
+                  option By Owner
+                input.form-control(type='text', placeholder='Search for...')
                 button.btn.btn-default(type='submit') Search
               ul.nav.navbar-nav.navbar-right
                 li
-                  a(href='/') Log Out
+                  a(href='/users/logout') Log Out
                 li.dropdown
                   a.dropdown-toggle(href='#', data-toggle='dropdown')
                     | Navigation
                     strong.caret
                   ul.dropdown-menu
                     li
-                      a(href='#') Action
+                      a(href='/myaccount') My Account
                     li
                       a(href='#') Another action
                     li
