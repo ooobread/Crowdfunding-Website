@@ -63,18 +63,44 @@ block content
                     div(id = project.name, class = 'panel-collapse.in')
                       .panel-body
                         | #{project.description}
-          else if projects
-            h1 Projects
+          else if comment
+            h1 Comments
             //- console.log('session: '+session);
             #panel-783993.panel-group
               #display-panel
-                for project in projects
+                for comments,i in comment
                   .panel.panel-default
                     .panel-heading
-                      a.panel-title(data-toggle='collapse', data-parent='#panel-783993', href='#'+project.name) #{project.name}
-                    div(id = project.name, class = 'panel-collapse.in')
+                      a.panel-title(data-toggle='collapse', data-parent='#panel-783993', href='#comment'+i) #{comments.date}
+                    div(id = 'comment'+i, class = 'panel-collapse.in')
                       .panel-body
-                        | #{project.description}
+                        h4 #{comments.pname}
+                        | #{comments.comment}
+          else if like
+            h1 Likes
+            //- console.log('session: '+session);
+            #panel-783993.panel-group
+              #display-panel
+                for likes,i in like
+                  .panel.panel-default
+                    .panel-heading
+                      a.panel-title(data-toggle='collapse', data-parent='#panel-783993', href='#like'+i) #{likes.pname}
+                    div(id = 'like'+i, class = 'panel-collapse.in')
+                      .panel-body
+                        | #{likes.description}
+          else if rate
+            h1 Rates
+            //- console.log('session: '+session);
+            #panel-783993.panel-group
+              #display-panel
+                for rates,i in rate
+                  .panel.panel-default
+                    .panel-heading
+                      a.panel-title(data-toggle='collapse', data-parent='#panel-783993', href='#rates'+i) #{rates.pname}
+                    div(id = 'rates'+i, class = 'panel-collapse.in')
+                      .panel-body
+                        h4 #{rates.description}
+                        h4 #{rates.score}
           else
             h1 No elements
 

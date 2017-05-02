@@ -113,7 +113,7 @@ router.get('/pledges', function(req, res, next) {
 });
 
 router.get('/comments', function(req, res, next) {
-	var sql = 'select project.name, comment.comments, comment.date from project, comment where comment.username = ?' ;
+	var sql = 'select project.name, comment.comments, comment.date from project, comment where project.pid = comment.pid and comment.username = ?' ;
  	var sqlParams = [req.session.user];
  	//console.log(sqlParams);
  	db.query(sql, sqlParams, function(results){
@@ -141,6 +141,61 @@ router.get('/comments', function(req, res, next) {
 	//res.sendFile(path.join(__dirname, '../static_views/Login.html'));
 });
 
+router.get('/likes', function(req, res, next) {
+	var sql = 'select project.name, project.description from project, likes where project.pid = likes.pid and likes.username = ?' ;
+ 	var sqlParams = [req.session.user];
+ 	//console.log(sqlParams);
+ 	db.query(sql, sqlParams, function(results){
+ 		//console.log(results);
+ 		if(results==''){
+ 			console.log('no');
+ 			res.render('startpage');
+ 		}
+ 		else{
+ 			console.log('yes');
+ 			//console.log(results[0]);
+ 			var arr = [];
+ 			for(var i = 0; i < results.length; i++){
+ 				var column = {};
+ 				column.pname = results[i].name;
+ 				column.description = results[i].description;
+ 				arr.push(column);
+ 				//console.log(arr);
+ 			}
+ 			//console.log(req.session);
+ 			res.render('startpage', {like: arr});
+ 		}
+ 	});
+	//res.sendFile(path.join(__dirname, '../static_views/Login.html'));
+});
 
+router.get('/rates', function(req, res, next) {
+	var sql = 'select project.name, project.description, rate.score from project, rate where project.pid = rate.pid and rate.username = ?' ;
+ 	var sqlParams = [req.session.user];
+ 	//console.log(sqlParams);
+ 	db.query(sql, sqlParams, function(results){
+ 		//console.log(results);
+ 		if(results==''){
+ 			console.log('no');
+ 			res.render('startpage');
+ 		}
+ 		else{
+ 			console.log('yes');
+ 			//console.log(results[0]);
+ 			var arr = [];
+ 			for(var i = 0; i < results.length; i++){
+ 				var column = {};
+ 				column.pname = results[i].name;
+ 				column.description = results[i].description;
+ 				column.score = results[i].score;
+ 				arr.push(column);
+ 				//console.log(arr);
+ 			}
+ 			//console.log(req.session);
+ 			res.render('startpage', {rate: arr});
+ 		}
+ 	});
+	//res.sendFile(path.join(__dirname, '../static_views/Login.html'));
+});
 
 module.exports = router;

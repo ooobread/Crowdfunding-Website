@@ -21,7 +21,7 @@ router.post('/checklogin', function(req, res, next) {
   	}
   	else{
       console.log('Success!');
-      console.log(username);
+      //console.log(username);
       req.session.user = username;
       req.session.pwd = password;
       //console.log(results[0].uid);
