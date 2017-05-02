@@ -28,7 +28,7 @@ router.post('/checklogin', function(req, res, next) {
       //console.log(req.session.user);
       //console.log(req.session.pwd);
   		//res.locals.success('Success!!');
-  		res.render('startpage', {session: JSON.stringify(req.session)});
+  		res.render('startpage');
  	}
   });
 });

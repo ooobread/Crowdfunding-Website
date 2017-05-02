@@ -2,6 +2,37 @@ var express = require('express');
 var router = express.Router();
 var db = require('./database.js');
 
+router.get('/', function(req, res, next) {
+	var sql = 'select username, name, hometown, interests, credit_card from user where username = ?' ;
+ 	var sqlParams = [req.session.user];
+ 	//console.log(sqlParams);
+ 	db.query(sql, sqlParams, function(results){
+ 		//console.log(results);
+ 		if(results==''){
+ 			console.log('no');
+ 			res.render('startpage');
+ 		}
+ 		else{
+ 			console.log('yes');
+ 			//console.log(results[0]);
+ 			var arr = [];
+ 			for(var i = 0; i < results.length; i++){
+ 				var column = {};
+ 				column.username = req.session.user;
+ 				column.name = results[i].name;
+ 				column.hometown = results[i].hometown;
+ 				column.interests = results[i].interests;
+ 				column.credit = results[i].credit_card;
+ 				arr.push(column);
+ 				//console.log(arr);
+ 			}
+ 			//console.log(req.session);
+ 			res.render('startpage', {information: arr});
+ 		}
+ 	});
+	//res.sendFile(path.join(__dirname, '../static_views/Login.html'));
+});
+
 router.get('/projects', function(req, res, next) {
 	var sql = 'select name, description from project where username = ?' ;
  	var sqlParams = [req.session.user];

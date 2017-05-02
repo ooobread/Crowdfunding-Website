@@ -1,4 +1,4 @@
-extends navibar-module
+extends navibar-template
 block title
    title Account
 block content
@@ -6,18 +6,31 @@ block content
         .col-md-3.column
           h1 Menu List
           .list-group
-            a.list-group-item(href='/account/projects') My Projects
-            a.list-group-item(href='/account/following') My Following
-            a.list-group-item(href='/account/follower') My Follower
-            a.list-group-item(href='/account/pledges') My Pledges
-            a.list-group-item(href='/account/comments') My Comments
-            a.list-group-item(href='/account/likes') My Likes
-            a.list-group-item(href='/account/rates') My Rates
+            a.list-group-item(href='/myaccount') My Account
+            a.list-group-item(href='/myaccount/projects') My Projects
+            a.list-group-item(href='/myaccount/following') My Following
+            a.list-group-item(href='/myaccount/follower') My Follower
+            a.list-group-item(href='/myaccount/pledges') My Pledges
+            a.list-group-item(href='/myaccount/comments') My Comments
+            a.list-group-item(href='/myaccount/likes') My Likes
+            a.list-group-item(href='/myaccount/rates') My Rates
         .col-md-9.column
           //- console.log(projects);
           //- console.log(following); 
           //- console.log(follower);
-          if projects
+          if information
+            h1 Information
+            dt Username:
+            dd #{information.username}
+            dt Name:
+            dd #{information.name}
+            dt Hometown:
+            dd #{information.hometown}
+            dt Interests:
+            dd #{information.interests}
+            dt Credit Card Number:
+            dd #{information.credit}
+          else if projects
             h1 Projects
             //- console.log('session: '+session);
             #panel-783993.panel-group
