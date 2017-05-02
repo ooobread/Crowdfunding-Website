@@ -6,7 +6,7 @@ var path    = require('path');
 router.get('/', function(req, res, next) {
 	//console.log('index');
 	//console.log(req.session.user);
-	res.render('Login');
+	res.render('login');
 	//res.sendFile(path.join(__dirname, '../static_views/Login.html'));
 });
 

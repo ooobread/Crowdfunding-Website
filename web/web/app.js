@@ -8,7 +8,7 @@ var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
-var manage = require('./routes/manage');
+var account = require('./routes/account');
 
 var app = express();
 
@@ -26,14 +26,14 @@ app.use(session({
 	resave: false,
 	saveUninitialized: false,
 	secret: 'random key',
-	cookie: { maxAge: 60 * 1000 }
+	cookie: { maxAge: 60 * 60 * 1000 }
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'static_views')));
 
 app.use('/', index);
 app.use('/users', users);
-app.use('/manage', manage);
+app.use('/account', account);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
