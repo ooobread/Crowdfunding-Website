@@ -17,7 +17,7 @@ router.post('/checklogin', function(req, res, next) {
 	  if(results == ''){
       console.log('Error!');
   		//res.locals.error = 'User Name or Password Error!';
-  		res.render('Login', {message:'again'});
+  		res.render('login', {message:'again'});
   	}
   	else{
       console.log('Success!');
@@ -28,10 +28,15 @@ router.post('/checklogin', function(req, res, next) {
       //console.log(req.session.user);
       //console.log(req.session.pwd);
   		//res.locals.success('Success!!');
-  		res.render('startpage');
+      res.redirect('/myaccount');
+  		//res.render('startpage');
  	}
   });
 });
 
+router.get('/logout', function(req, res) {
+  req.session.destroy();
+  res.redirect('/users/login');
+});
 
 module.exports = router;

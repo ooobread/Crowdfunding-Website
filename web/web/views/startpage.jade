@@ -1,6 +1,6 @@
 extends navibar-template
 block title
-   title Account
+   title My Account
 block content
       .row.clearfix
         .col-md-3.column
@@ -18,18 +18,20 @@ block content
           //- console.log(projects);
           //- console.log(following); 
           //- console.log(follower);
+          //- console.log(information);
           if information
-            h1 Information
-            dt Username:
-            dd #{information.username}
-            dt Name:
-            dd #{information.name}
-            dt Hometown:
-            dd #{information.hometown}
-            dt Interests:
-            dd #{information.interests}
-            dt Credit Card Number:
-            dd #{information.credit}
+            for informations in information
+              h1 Information
+              dt Username:
+              dd #{informations.username}
+              dt Name:
+              dd #{informations.name}
+              dt Hometown:
+              dd #{informations.hometown}
+              dt Interests:
+              dd #{informations.interests}
+              dt Credit Card Number:
+              dd #{informations.credit}
           else if projects
             h1 Projects
             //- console.log('session: '+session);
