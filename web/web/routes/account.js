@@ -1,16 +1,26 @@
 var express = require('express');
 var router = express.Router();
 var db = require('./database.js');
+var url = require('url');
 
-router.get('/', function(req, res, next) {
+router.param('username', function(req, res, next, username) {
+	// 对name进行验证或其他处理……
+	//console.log('param: '+username);
+	req.username = username;
+	next();	
+});
+
+router.get('/:username', function(req, res, next) {
+	//console.log('get: '+ req.username);
+	//var username = req.session.username;
 	var sql = 'select username, name, hometown, interests, credit_card from user where username = ?' ;
- 	var sqlParams = [req.session.user];
+ 	var sqlParams = [req.username];
  	//console.log(sqlParams);
  	db.query(sql, sqlParams, function(results){
  		//console.log(results);
  		if(results==''){
  			console.log('no');
- 			res.render('startpage');
+ 			res.render('startpage', {username: req.username});
  		}
  		else{
  			console.log('yes');
@@ -18,30 +28,37 @@ router.get('/', function(req, res, next) {
  			var arr = [];
  			for(var i = 0; i < results.length; i++){
  				var column = {};
- 				column.username = req.session.user;
+ 				column.username = results[i].username;
  				column.name = results[i].name;
  				column.hometown = results[i].hometown;
  				column.interests = results[i].interests;
- 				column.credit = results[i].credit_card;
+ 				if(req.username == req.session.user){
+ 					column.credit = results[i].credit_card;
+ 				}
  				arr.push(column);
  				//console.log(arr);
  			}
  			//console.log(req.session);
- 			res.render('startpage', {information: arr});
+ 			res.render('startpage', {information: arr,
+ 									 username: req.username});
  		}
  	});
 	//res.sendFile(path.join(__dirname, '../static_views/Login.html'));
 });
 
-router.get('/projects', function(req, res, next) {
+router.get('/:username/projects', function(req, res, next) {
+	//var username = req.session.username;
 	var sql = 'select name, description from project where username = ?' ;
- 	var sqlParams = [req.session.user];
+ 	var sqlParams = [req.username];
  	//console.log(sqlParams);
  	db.query(sql, sqlParams, function(results){
  		//console.log(results);
  		if(results==''){
  			console.log('no');
- 			res.render('startpage');
+ 		    var arr = [];
+ 			arr.push('No Results');
+ 			res.render('startpage', {projects: arr,
+ 									 username: req.username});
  		}
  		else{
  			console.log('yes');
@@ -55,21 +72,26 @@ router.get('/projects', function(req, res, next) {
  				//console.log(arr);
  			}
  			//console.log(req.session);
- 			res.render('startpage', {projects: arr});
+ 			res.render('startpage', {projects: arr,
+ 									 username: req.username});
  		}
  	});
 	//res.sendFile(path.join(__dirname, '../static_views/Login.html'));
 });
 
-router.get('/following', function(req, res, next) {
+router.get('/:username/following', function(req, res, next) {
+	//var username = req.session.username;
 	var sql = 'select uid2 from follow where uid1 = ?' ;
- 	var sqlParams = [req.session.user];
+ 	var sqlParams = [req.username];
  	//console.log(sqlParams);
  	db.query(sql, sqlParams, function(results){
  		//console.log(results);
  		if(results==''){
  			console.log('no');
- 			res.render('startpage');
+ 			var arr = [];
+ 			arr.push('No Results');
+ 			res.render('startpage', {following: arr,
+ 									 username: req.username});
  		}
  		else{
  			console.log('yes');
@@ -82,21 +104,26 @@ router.get('/following', function(req, res, next) {
  				//console.log(arr);
  			}
  			//console.log(req.session);
- 			res.render('startpage', {following: arr});
+ 			res.render('startpage', {following: arr,
+ 									 username: req.username});
  		}
  	});
 	//res.sendFile(path.join(__dirname, '../static_views/Login.html'));
 });
 
-router.get('/follower', function(req, res, next) {
+router.get('/:username/follower', function(req, res, next) {
+	//var username = req.session.username;
 	var sql = 'select uid1 from follow where uid2 = ?' ;
- 	var sqlParams = [req.session.user];
+ 	var sqlParams = [req.username];
  	//console.log(sqlParams);
  	db.query(sql, sqlParams, function(results){
  		//console.log(results);
  		if(results==''){
  			console.log('no');
- 			res.render('startpage');
+ 			var arr = [];
+ 			arr.push('No Results');
+ 			res.render('startpage', {follower: arr,
+ 									 username: req.username});
  		}
  		else{
  			console.log('yes');
@@ -109,21 +136,26 @@ router.get('/follower', function(req, res, next) {
  				//console.log(arr);
  			}
  			//console.log(req.session);
- 			res.render('startpage', {follower: arr});
+ 			res.render('startpage', {follower: arr,
+ 									 username: req.username});
  		}
  	});
 	//res.sendFile(path.join(__dirname, '../static_views/Login.html'));
 });
 
-router.get('/pledges', function(req, res, next) {
+router.get('/:username/pledges', function(req, res, next) {
+	//var username = req.session.username;
 	var sql = 'select project.name, project.description from project, donate where project.pid = donate.pid and donate.username = ?' ;
- 	var sqlParams = [req.session.user];
+ 	var sqlParams = [req.username];
  	//console.log(sqlParams);
  	db.query(sql, sqlParams, function(results){
  		//console.log(results);
  		if(results==''){
  			console.log('no');
- 			res.render('startpage');
+ 			var arr = [];
+ 			arr.push('No Results');
+ 			res.render('startpage', {pledge: arr,
+ 									 username: req.username});
  		}
  		else{
  			console.log('yes');
@@ -137,21 +169,26 @@ router.get('/pledges', function(req, res, next) {
  				//console.log(arr);
  			}
  			//console.log(req.session);
- 			res.render('startpage', {pledge: arr});
+ 			res.render('startpage', {pledge: arr,
+ 									 username: req.username});
  		}
  	});
 	//res.sendFile(path.join(__dirname, '../static_views/Login.html'));
 });
 
-router.get('/comments', function(req, res, next) {
+router.get('/:username/comments', function(req, res, next) {
+	//var username = req.session.username;
 	var sql = 'select project.name, comment.comments, comment.date from project, comment where project.pid = comment.pid and comment.username = ?' ;
- 	var sqlParams = [req.session.user];
+ 	var sqlParams = [req.username];
  	//console.log(sqlParams);
  	db.query(sql, sqlParams, function(results){
  		//console.log(results);
  		if(results==''){
  			console.log('no');
- 			res.render('startpage');
+ 			var arr = [];
+ 			arr.push('No Results');
+ 			res.render('startpage', {comment: arr,
+ 									 username: req.username});
  		}
  		else{
  			console.log('yes');
@@ -166,21 +203,27 @@ router.get('/comments', function(req, res, next) {
  				//console.log(arr);
  			}
  			//console.log(req.session);
- 			res.render('startpage', {comment: arr});
+ 			console.log('comments: '+req.username);
+ 			res.render('startpage', {comment: arr,
+ 									 username: req.username});
  		}
  	});
 	//res.sendFile(path.join(__dirname, '../static_views/Login.html'));
 });
 
-router.get('/likes', function(req, res, next) {
+router.get('/:username/likes', function(req, res, next) {
+	//var username = req.session.username;
 	var sql = 'select project.name, project.description from project, likes where project.pid = likes.pid and likes.username = ?' ;
- 	var sqlParams = [req.session.user];
+ 	var sqlParams = [req.username];
  	//console.log(sqlParams);
  	db.query(sql, sqlParams, function(results){
  		//console.log(results);
  		if(results==''){
  			console.log('no');
- 			res.render('startpage');
+ 			var arr = [];
+ 			arr.push('No Results');
+ 			res.render('startpage', {like: arr,
+ 									 username: req.username});
  		}
  		else{
  			console.log('yes');
@@ -194,21 +237,26 @@ router.get('/likes', function(req, res, next) {
  				//console.log(arr);
  			}
  			//console.log(req.session);
- 			res.render('startpage', {like: arr});
+ 			res.render('startpage', {like: arr,
+ 									 username: req.username});
  		}
  	});
 	//res.sendFile(path.join(__dirname, '../static_views/Login.html'));
 });
 
-router.get('/rates', function(req, res, next) {
+router.get('/:username/rates', function(req, res, next) {
+	//var username = req.session.username;
 	var sql = 'select project.name, project.description, rate.score from project, rate where project.pid = rate.pid and rate.username = ?' ;
- 	var sqlParams = [req.session.user];
+ 	var sqlParams = [req.username];
  	//console.log(sqlParams);
  	db.query(sql, sqlParams, function(results){
  		//console.log(results);
  		if(results==''){
  			console.log('no');
- 			res.render('startpage');
+ 			var arr = [];
+ 			arr.push('No Results');
+ 			res.render('startpage', {rate: arr,
+ 									 username: req.username});
  		}
  		else{
  			console.log('yes');
@@ -223,7 +271,8 @@ router.get('/rates', function(req, res, next) {
  				//console.log(arr);
  			}
  			//console.log(req.session);
- 			res.render('startpage', {rate: arr});
+ 			res.render('startpage', {rate: arr,
+ 									 username: req.username});
  		}
  	});
 	//res.sendFile(path.join(__dirname, '../static_views/Login.html'));

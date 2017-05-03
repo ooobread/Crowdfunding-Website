@@ -28,7 +28,7 @@ router.post('/checklogin', function(req, res, next) {
       //console.log(req.session.user);
       //console.log(req.session.pwd);
   		//res.locals.success('Success!!');
-      res.redirect('/myaccount');
+      res.redirect('/account/'+username);
   		//res.render('startpage');
  	}
   });

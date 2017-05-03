@@ -6,14 +6,14 @@ block content
         .col-md-3.column
           h1 Menu List
           .list-group
-            a.list-group-item(href='/myaccount') My Account
-            a.list-group-item(href='/myaccount/projects') My Projects
-            a.list-group-item(href='/myaccount/following') My Following
-            a.list-group-item(href='/myaccount/follower') My Follower
-            a.list-group-item(href='/myaccount/pledges') My Pledges
-            a.list-group-item(href='/myaccount/comments') My Comments
-            a.list-group-item(href='/myaccount/likes') My Likes
-            a.list-group-item(href='/myaccount/rates') My Rates
+            a.list-group-item(href='/account/#{username}') My Account
+            a.list-group-item(href='/account/#{username}/projects') My Projects
+            a.list-group-item(href='/account/#{username}/following') My Following
+            a.list-group-item(href='/account/#{username}/follower') My Follower
+            a.list-group-item(href='/account/#{username}/pledges') My Pledges
+            a.list-group-item(href='/account/#{username}/comments') My Comments
+            a.list-group-item(href='/account/#{username}/likes') My Likes
+            a.list-group-item(href='/account/#{username}/rates') My Rates
         .col-md-9.column
           //- console.log(projects);
           //- console.log(following); 
@@ -30,92 +30,111 @@ block content
               dd #{informations.hometown}
               dt Interests:
               dd #{informations.interests}
-              dt Credit Card Number:
-              dd #{informations.credit}
+              if informations.credit
+                dt Credit Card Number:
+                dd #{informations.credit}
           else if projects
             h1 Projects
-            //- console.log('session: '+session);
-            #panel-783993.panel-group
-              #display-panel
-                for project in projects
-                  .panel.panel-default
-                    .panel-heading
-                      a.panel-title(data-toggle='collapse', data-parent='#panel-783993', href='#'+project.name) #{project.name}
-                    div(id = project.name, class = 'panel-collapse.in')
-                      .panel-body
-                        | #{project.description}
+            p
+              button.btn.btn-default(type='button', herf='#') Post a New Project
+            if projects != 'No Results'
+              #panel-783993.panel-group
+                #display-panel
+                  for project in projects
+                    .panel.panel-default
+                      .panel-heading
+                        a.panel-title(data-toggle='collapse', data-parent='#panel-783993', href='#'+project.name) #{project.name}
+                      div(id = project.name, class = 'panel-collapse.in')
+                        .panel-body
+                          | #{project.description}
+            else
+              h4 You have no Project.
           else if following
             h1 Following
-            for user2 in following
-              .col-md-4.column
-                .media
-                  .media-left.media-left
-                    a(href='#')
-                      img.media-object(src='...', alt='...')
-                    .media-body
-                      h4.media-heading #{user2.name}
-                      |     ...
+            if following != 'No Results'
+              for user2 in following
+                .col-md-4.column
+                  .media
+                    .media-left.media-left
+                      a(href='/account/#{user2.name}')
+                        img.media-object(src='...', alt='...')
+                      .media-body
+                        h4.media-heading #{user2.name}
+                        |     ...
+            else
+              h4 You are not following anyone.
           else if follower
             h1 Followers
-            for user1 in follower
-              .col-md-4.column
-                .media
-                  .media-left.media-left
-                    a(href='#')
-                      img.media-object(src='...', alt='...')
-                    .media-body
-                      h4.media-heading #{user1.name}
-                      |     ...
-
+            if follower != 'No Results'
+              for user1 in follower
+                .col-md-4.column
+                  .media
+                    .media-left.media-left
+                      a(href='/account/#{user1.name}')
+                        img.media-object(src='...', alt='...')
+                      .media-body
+                        h4.media-heading #{user1.name}
+                        |     ...
+            else
+              h4 You have no follower.
           else if pledge
             h1 Pledges
-            #panel-783993.panel-group
-              #display-panel
-                for project in pledge
-                  .panel.panel-default
-                    .panel-heading
-                      a.panel-title(data-toggle='collapse', data-parent='#panel-783993', href='#'+project.name) #{project.name}
-                    div(id = project.name, class = 'panel-collapse.in')
-                      .panel-body
-                        | #{project.description}
+            if pledges != 'No Results'
+              #panel-783993.panel-group
+                #display-panel
+                  for project in pledge
+                    .panel.panel-default
+                      .panel-heading
+                        a.panel-title(data-toggle='collapse', data-parent='#panel-783993', href='#'+project.name) #{project.name}
+                      div(id = project.name, class = 'panel-collapse.in')
+                        .panel-body
+                          | #{project.description}
+            else
+              h4 You have no pledges.
           else if comment
             h1 Comments
-            //- console.log('session: '+session);
-            #panel-783993.panel-group
-              #display-panel
-                for comments,i in comment
-                  .panel.panel-default
-                    .panel-heading
-                      a.panel-title(data-toggle='collapse', data-parent='#panel-783993', href='#comment'+i) #{comments.date}
-                    div(id = 'comment'+i, class = 'panel-collapse.in')
-                      .panel-body
-                        h4 #{comments.pname}
-                        | #{comments.comment}
+            if comment != 'No Results'
+              #panel-783993.panel-group
+                #display-panel
+                  for comments,i in comment
+                    .panel.panel-default
+                      .panel-heading
+                        a.panel-title(data-toggle='collapse', data-parent='#panel-783993', href='#comment'+i) #{comments.date}
+                      div(id = 'comment'+i, class = 'panel-collapse.in')
+                        .panel-body
+                          h4 #{comments.pname}
+                          | #{comments.comment}
+            else
+              h4 You have no comment.
           else if like
             h1 Likes
-            //- console.log('session: '+session);
-            #panel-783993.panel-group
-              #display-panel
-                for likes,i in like
-                  .panel.panel-default
-                    .panel-heading
-                      a.panel-title(data-toggle='collapse', data-parent='#panel-783993', href='#like'+i) #{likes.pname}
-                    div(id = 'like'+i, class = 'panel-collapse.in')
-                      .panel-body
-                        | #{likes.description}
+            if like != 'No Results'
+              #panel-783993.panel-group
+                #display-panel
+                  for likes,i in like
+                    .panel.panel-default
+                      .panel-heading
+                        a.panel-title(data-toggle='collapse', data-parent='#panel-783993', href='#like'+i) #{likes.pname}
+                      div(id = 'like'+i, class = 'panel-collapse.in')
+                        .panel-body
+                          | #{likes.description}
+            else
+              h4 You have no like.
           else if rate
             h1 Rates
-            //- console.log('session: '+session);
-            #panel-783993.panel-group
-              #display-panel
-                for rates,i in rate
-                  .panel.panel-default
-                    .panel-heading
-                      a.panel-title(data-toggle='collapse', data-parent='#panel-783993', href='#rates'+i) #{rates.pname}
-                    div(id = 'rates'+i, class = 'panel-collapse.in')
-                      .panel-body
-                        h4 #{rates.description}
-                        h4 #{rates.score}
+            if rate != 'No Results'
+              #panel-783993.panel-group
+                #display-panel
+                  for rates,i in rate
+                    .panel.panel-default
+                      .panel-heading
+                        a.panel-title(data-toggle='collapse', data-parent='#panel-783993', href='#rates'+i) #{rates.pname}
+                      div(id = 'rates'+i, class = 'panel-collapse.in')
+                        .panel-body
+                          h4 #{rates.description}
+                          h4 #{rates.score}
+            else
+              h4 You have no rate.
           else
             h1 No elements
 
