@@ -42,11 +42,11 @@ html(lang='en')
                 li.active
                   a(href='#') Index
               form.navbar-form.navbar-left(role='search', method='get', action='#')
-                select.selectpicker(data-width='fit')
-                  option By Project Name
-                  option By Project Tag
-                  option By Owner
-                input.form-control(type='text', placeholder='Search for...')
+                select.selectpicker(data-width='fit', name='serachselect')
+                  option(value='name') By Project Name
+                  option(value='tag') By Project Tag
+                  option(value='owner') By Owner
+                input.form-control(type='text', placeholder='Search for...', name='searchtext')
                 button.btn.btn-default(type='submit') Search
               ul.nav.navbar-nav.navbar-right
                 li
@@ -57,7 +57,7 @@ html(lang='en')
                     strong.caret
                   ul.dropdown-menu
                     li
-                      a(href='/myaccount') My Account
+                      a(href='/account/'+myusername) My Account
                     li
                       a(href='#') Another action
                     li

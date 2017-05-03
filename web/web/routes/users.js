@@ -11,25 +11,16 @@ router.post('/checklogin', function(req, res, next) {
   var sqlparams_results = [username];
   var sqlparams_condition = [password, username];
   var sqlparams = sqlparams_results.concat(sqlparams_condition);
-  //console.log(req.body.inputUserName);
-  //console.log(req.body.inputPassword);
   db.query(sql, sqlparams, function(results){
 	  if(results == ''){
       console.log('Error!');
-  		//res.locals.error = 'User Name or Password Error!';
   		res.render('login', {message:'again'});
   	}
   	else{
       console.log('Success!');
-      //console.log(username);
       req.session.user = username;
       req.session.pwd = password;
-      //console.log(results[0].uid);
-      //console.log(req.session.user);
-      //console.log(req.session.pwd);
-  		//res.locals.success('Success!!');
       res.redirect('/account/'+username);
-  		//res.render('startpage');
  	}
   });
 });

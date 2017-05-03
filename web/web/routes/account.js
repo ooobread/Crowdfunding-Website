@@ -20,7 +20,8 @@ router.get('/:username', function(req, res, next) {
  		//console.log(results);
  		if(results==''){
  			console.log('no');
- 			res.render('startpage', {username: req.username});
+ 			res.render('startpage', {username: req.username,
+ 									 myusername: req.session.user});
  		}
  		else{
  			console.log('yes');
@@ -40,7 +41,8 @@ router.get('/:username', function(req, res, next) {
  			}
  			//console.log(req.session);
  			res.render('startpage', {information: arr,
- 									 username: req.username});
+ 									 username: req.username,
+ 									 myusername: req.session.user});
  		}
  	});
 	//res.sendFile(path.join(__dirname, '../static_views/Login.html'));
@@ -58,7 +60,8 @@ router.get('/:username/projects', function(req, res, next) {
  		    var arr = [];
  			arr.push('No Results');
  			res.render('startpage', {projects: arr,
- 									 username: req.username});
+ 									 username: req.username,
+ 									 myusername: req.session.user});
  		}
  		else{
  			console.log('yes');
@@ -73,7 +76,8 @@ router.get('/:username/projects', function(req, res, next) {
  			}
  			//console.log(req.session);
  			res.render('startpage', {projects: arr,
- 									 username: req.username});
+ 									 username: req.username,
+ 									 myusername: req.session.user});
  		}
  	});
 	//res.sendFile(path.join(__dirname, '../static_views/Login.html'));
@@ -91,7 +95,8 @@ router.get('/:username/following', function(req, res, next) {
  			var arr = [];
  			arr.push('No Results');
  			res.render('startpage', {following: arr,
- 									 username: req.username});
+ 									 username: req.username,
+ 									 myusername: req.session.user});
  		}
  		else{
  			console.log('yes');
@@ -105,7 +110,8 @@ router.get('/:username/following', function(req, res, next) {
  			}
  			//console.log(req.session);
  			res.render('startpage', {following: arr,
- 									 username: req.username});
+ 									 username: req.username,
+ 									 myusername: req.session.user});
  		}
  	});
 	//res.sendFile(path.join(__dirname, '../static_views/Login.html'));
@@ -123,7 +129,8 @@ router.get('/:username/follower', function(req, res, next) {
  			var arr = [];
  			arr.push('No Results');
  			res.render('startpage', {follower: arr,
- 									 username: req.username});
+ 									 username: req.username,
+ 									 myusername: req.session.user});
  		}
  		else{
  			console.log('yes');
@@ -137,7 +144,8 @@ router.get('/:username/follower', function(req, res, next) {
  			}
  			//console.log(req.session);
  			res.render('startpage', {follower: arr,
- 									 username: req.username});
+ 									 username: req.username,
+ 									 myusername: req.session.user});
  		}
  	});
 	//res.sendFile(path.join(__dirname, '../static_views/Login.html'));
@@ -155,7 +163,8 @@ router.get('/:username/pledges', function(req, res, next) {
  			var arr = [];
  			arr.push('No Results');
  			res.render('startpage', {pledge: arr,
- 									 username: req.username});
+ 									 username: req.username,
+ 									 myusername: req.session.user});
  		}
  		else{
  			console.log('yes');
@@ -170,7 +179,8 @@ router.get('/:username/pledges', function(req, res, next) {
  			}
  			//console.log(req.session);
  			res.render('startpage', {pledge: arr,
- 									 username: req.username});
+ 									 username: req.username,
+ 									 myusername: req.session.user});
  		}
  	});
 	//res.sendFile(path.join(__dirname, '../static_views/Login.html'));
@@ -188,7 +198,8 @@ router.get('/:username/comments', function(req, res, next) {
  			var arr = [];
  			arr.push('No Results');
  			res.render('startpage', {comment: arr,
- 									 username: req.username});
+ 									 username: req.username,
+ 									 myusername: req.session.user});
  		}
  		else{
  			console.log('yes');
@@ -205,7 +216,8 @@ router.get('/:username/comments', function(req, res, next) {
  			//console.log(req.session);
  			console.log('comments: '+req.username);
  			res.render('startpage', {comment: arr,
- 									 username: req.username});
+ 									 username: req.username,
+ 									 myusername: req.session.user});
  		}
  	});
 	//res.sendFile(path.join(__dirname, '../static_views/Login.html'));
@@ -223,7 +235,8 @@ router.get('/:username/likes', function(req, res, next) {
  			var arr = [];
  			arr.push('No Results');
  			res.render('startpage', {like: arr,
- 									 username: req.username});
+ 									 username: req.username,
+ 									 myusername: req.session.user});
  		}
  		else{
  			console.log('yes');
@@ -238,7 +251,8 @@ router.get('/:username/likes', function(req, res, next) {
  			}
  			//console.log(req.session);
  			res.render('startpage', {like: arr,
- 									 username: req.username});
+ 									 username: req.username,
+ 									 myusername: req.session.user});
  		}
  	});
 	//res.sendFile(path.join(__dirname, '../static_views/Login.html'));
@@ -256,7 +270,8 @@ router.get('/:username/rates', function(req, res, next) {
  			var arr = [];
  			arr.push('No Results');
  			res.render('startpage', {rate: arr,
- 									 username: req.username});
+ 									 username: req.username,
+ 									 myusername: req.session.user});
  		}
  		else{
  			console.log('yes');
@@ -272,7 +287,8 @@ router.get('/:username/rates', function(req, res, next) {
  			}
  			//console.log(req.session);
  			res.render('startpage', {rate: arr,
- 									 username: req.username});
+ 									 username: req.username,
+ 									 myusername: req.session.user});
  		}
  	});
 	//res.sendFile(path.join(__dirname, '../static_views/Login.html'));
