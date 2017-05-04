@@ -1,0 +1,17 @@
+extends navibar-layout
+block title
+   title My Search
+block content-main
+      .row
+        for row1 in rows
+          .col-md-4.card()
+            img.card-img-top(src=' ', alt='Card image cap')
+            .card-block
+            h4.card-title #{row1.Pname}
+            p.card-text #{row1.description}
+            a.btn.btn-primary(href='#') View
+            
+            
+            
+
+            
