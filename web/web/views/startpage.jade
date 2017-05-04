@@ -36,7 +36,8 @@ block content
           else if projects
             h1 Projects
             p
-              button.btn.btn-default(type='button', herf='#') Post a New Project
+              a(href='/project/post')
+                button.btn.btn-default(type='button') Post a New Project
             if projects != 'No Results'
               #panel-783993.panel-group
                 #display-panel

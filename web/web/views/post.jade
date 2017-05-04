@@ -1,0 +1,23 @@
+extends navibar-template
+block title
+   title Post Project
+block content
+  .row.clearfix
+    .col-md-12.column
+      form(role='form')
+        .form-group
+          label(for='InputProjectName') Project Name:
+          input#InputProjectName.form-control(type='text')
+        .form-group
+          label(for='InputProjectDescription') Project Description
+          textarea#InputProjectDescription.form-control(row='5')
+        .form-group
+          label(for='exampleInputFile') File input
+          input#exampleInputFile(type='file')
+          p.help-block
+            | Example block-level help text here.
+        .checkbox
+          label
+            input(type='checkbox')
+            | Check me out
+        button.btn.btn-default(type='submit') Submit
