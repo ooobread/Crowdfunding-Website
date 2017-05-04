@@ -9,15 +9,16 @@ block content-main
           label(for='InputProjectName') Project Name:
           input#InputProjectName.form-control(type='text')
         .form-group
-          label(for='InputProjectDescription') Project Description
+          label(for='InputProjectDescription') Project Description:
           textarea#InputProjectDescription.form-control(row='10')
         .form-group
-          label(for='exampleInputFile') File input
-          input#exampleInputFile(type='file')
+          label(for='InputMinMax') Please type in minimal and maximal amount: 
+          p Min:
+          input#InputMinMax.form-control(type='text')
+          p Max:
+          input#InputMinMax.form-control(type='text')
           p.help-block
-            | Example block-level help text here.
-        .checkbox
-          label
-            input(type='checkbox')
-            | Check me out
+            | in $
+        .form-group
+          input#searchWords.form-control(type='text', name='searchWords', data-provide='typeahead', autocomplete='off', placeholder='Tag ...')
         button.btn.btn-default(type='submit') Submit

@@ -29,8 +29,8 @@ app.use(session({
 	secret: 'random key',
 	cookie: { maxAge: 60 * 60 * 1000 }
 }));
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'static_views')));
+app.use('/public', express.static(path.join(__dirname, 'public')));
+app.use('/static_views', express.static(path.join(__dirname, 'static_views')));
 
 app.use('/', index);
 app.use('/users', users);

@@ -13,7 +13,7 @@ router.param('username', function(req, res, next, username) {
 router.get('/:username', function(req, res, next) {
 	//console.log('get: '+ req.username);
 	//var username = req.session.username;
-	var sql = 'select username, name, hometown, interests, credit_card from user where username = ?' ;
+	var sql = 'select uid, name, hometown, interest, credit_card from user where uid = ?' ;
  	var sqlParams = [req.username];
  	//console.log(sqlParams);
  	db.query(sql, sqlParams, function(results){
@@ -26,21 +26,8 @@ router.get('/:username', function(req, res, next) {
  		else{
  			console.log('yes');
  			//console.log(results[0]);
- 			var arr = [];
- 			for(var i = 0; i < results.length; i++){
- 				var column = {};
- 				column.username = results[i].username;
- 				column.name = results[i].name;
- 				column.hometown = results[i].hometown;
- 				column.interests = results[i].interests;
- 				if(req.username == req.session.user){
- 					column.credit = results[i].credit_card;
- 				}
- 				arr.push(column);
- 				//console.log(arr);
- 			}
  			//console.log(req.session);
- 			res.render('startpage', {information: arr,
+ 			res.render('startpage', {information: results,
  									 username: req.username,
  									 myusername: req.session.user});
  		}
@@ -50,7 +37,7 @@ router.get('/:username', function(req, res, next) {
 
 router.get('/:username/projects', function(req, res, next) {
 	//var username = req.session.username;
-	var sql = 'select name, description from project where username = ?' ;
+	var sql = 'select pname, description from project where pruid = ?' ;
  	var sqlParams = [req.username];
  	//console.log(sqlParams);
  	db.query(sql, sqlParams, function(results){
@@ -66,16 +53,8 @@ router.get('/:username/projects', function(req, res, next) {
  		else{
  			console.log('yes');
  			//console.log(results[0]);
- 			var arr = [];
- 			for(var i = 0; i < results.length; i++){
- 				var column = {};
- 				column.name = results[i].name;
- 				column.description = results[i].description;
- 				arr.push(column);
- 				//console.log(arr);
- 			}
  			//console.log(req.session);
- 			res.render('startpage', {projects: arr,
+ 			res.render('startpage', {projects: results,
  									 username: req.username,
  									 myusername: req.session.user});
  		}
@@ -85,7 +64,7 @@ router.get('/:username/projects', function(req, res, next) {
 
 router.get('/:username/following', function(req, res, next) {
 	//var username = req.session.username;
-	var sql = 'select uid2 from follow where uid1 = ?' ;
+	var sql = 'select fuid2 from follow where fuid1 = ?' ;
  	var sqlParams = [req.username];
  	//console.log(sqlParams);
  	db.query(sql, sqlParams, function(results){
@@ -101,15 +80,8 @@ router.get('/:username/following', function(req, res, next) {
  		else{
  			console.log('yes');
  			//console.log(results[0]);
- 			var arr = [];
- 			for(var i = 0; i < results.length; i++){
- 				var column = {};
- 				column.name = results[i].uid2;
- 				arr.push(column);
- 				//console.log(arr);
- 			}
  			//console.log(req.session);
- 			res.render('startpage', {following: arr,
+ 			res.render('startpage', {following: results,
  									 username: req.username,
  									 myusername: req.session.user});
  		}
@@ -119,7 +91,7 @@ router.get('/:username/following', function(req, res, next) {
 
 router.get('/:username/follower', function(req, res, next) {
 	//var username = req.session.username;
-	var sql = 'select uid1 from follow where uid2 = ?' ;
+	var sql = 'select fuid1 from follow where fuid2 = ?' ;
  	var sqlParams = [req.username];
  	//console.log(sqlParams);
  	db.query(sql, sqlParams, function(results){
@@ -135,15 +107,8 @@ router.get('/:username/follower', function(req, res, next) {
  		else{
  			console.log('yes');
  			//console.log(results[0]);
- 			var arr = [];
- 			for(var i = 0; i < results.length; i++){
- 				var column = {};
- 				column.name = results[i].uid1;
- 				arr.push(column);
- 				//console.log(arr);
- 			}
  			//console.log(req.session);
- 			res.render('startpage', {follower: arr,
+ 			res.render('startpage', {follower: results,
  									 username: req.username,
  									 myusername: req.session.user});
  		}
@@ -153,7 +118,7 @@ router.get('/:username/follower', function(req, res, next) {
 
 router.get('/:username/pledges', function(req, res, next) {
 	//var username = req.session.username;
-	var sql = 'select project.name, project.description from project, donate where project.pid = donate.pid and donate.username = ?' ;
+	var sql = 'select project.pname, project.description from project, donate where project.pid = donate.dpid and donate.duid = ?' ;
  	var sqlParams = [req.username];
  	//console.log(sqlParams);
  	db.query(sql, sqlParams, function(results){
@@ -169,16 +134,8 @@ router.get('/:username/pledges', function(req, res, next) {
  		else{
  			console.log('yes');
  			//console.log(results[0]);
- 			var arr = [];
- 			for(var i = 0; i < results.length; i++){
- 				var column = {};
- 				column.name = results[i].name;
- 				column.description = results[i].description;
- 				arr.push(column);
- 				//console.log(arr);
- 			}
  			//console.log(req.session);
- 			res.render('startpage', {pledge: arr,
+ 			res.render('startpage', {pledge: results,
  									 username: req.username,
  									 myusername: req.session.user});
  		}
@@ -188,7 +145,7 @@ router.get('/:username/pledges', function(req, res, next) {
 
 router.get('/:username/comments', function(req, res, next) {
 	//var username = req.session.username;
-	var sql = 'select project.name, comment.comments, comment.date from project, comment where project.pid = comment.pid and comment.username = ?' ;
+	var sql = 'select project.pname, comment.comments, comment.date from project, comment where project.pid = comment.cpid and comment.cuid = ?' ;
  	var sqlParams = [req.username];
  	//console.log(sqlParams);
  	db.query(sql, sqlParams, function(results){
@@ -204,18 +161,9 @@ router.get('/:username/comments', function(req, res, next) {
  		else{
  			console.log('yes');
  			//console.log(results[0]);
- 			var arr = [];
- 			for(var i = 0; i < results.length; i++){
- 				var column = {};
- 				column.pname = results[i].name;
- 				column.comment = results[i].comments;
- 				column.date = results[i].date;
- 				arr.push(column);
- 				//console.log(arr);
- 			}
  			//console.log(req.session);
  			console.log('comments: '+req.username);
- 			res.render('startpage', {comment: arr,
+ 			res.render('startpage', {comment: results,
  									 username: req.username,
  									 myusername: req.session.user});
  		}
@@ -225,7 +173,7 @@ router.get('/:username/comments', function(req, res, next) {
 
 router.get('/:username/likes', function(req, res, next) {
 	//var username = req.session.username;
-	var sql = 'select project.name, project.description from project, likes where project.pid = likes.pid and likes.username = ?' ;
+	var sql = 'select project.pname, project.description from project, likes where project.pid = likes.lpid and likes.luid = ?' ;
  	var sqlParams = [req.username];
  	//console.log(sqlParams);
  	db.query(sql, sqlParams, function(results){
@@ -241,16 +189,8 @@ router.get('/:username/likes', function(req, res, next) {
  		else{
  			console.log('yes');
  			//console.log(results[0]);
- 			var arr = [];
- 			for(var i = 0; i < results.length; i++){
- 				var column = {};
- 				column.pname = results[i].name;
- 				column.description = results[i].description;
- 				arr.push(column);
- 				//console.log(arr);
- 			}
  			//console.log(req.session);
- 			res.render('startpage', {like: arr,
+ 			res.render('startpage', {like: results,
  									 username: req.username,
  									 myusername: req.session.user});
  		}
@@ -260,7 +200,7 @@ router.get('/:username/likes', function(req, res, next) {
 
 router.get('/:username/rates', function(req, res, next) {
 	//var username = req.session.username;
-	var sql = 'select project.name, project.description, rate.score from project, rate where project.pid = rate.pid and rate.username = ?' ;
+	var sql = 'select project.pname, project.description, rate.score from project, rate where project.pid = rate.rpid and rate.ruid = ?' ;
  	var sqlParams = [req.username];
  	//console.log(sqlParams);
  	db.query(sql, sqlParams, function(results){
@@ -276,17 +216,8 @@ router.get('/:username/rates', function(req, res, next) {
  		else{
  			console.log('yes');
  			//console.log(results[0]);
- 			var arr = [];
- 			for(var i = 0; i < results.length; i++){
- 				var column = {};
- 				column.pname = results[i].name;
- 				column.description = results[i].description;
- 				column.score = results[i].score;
- 				arr.push(column);
- 				//console.log(arr);
- 			}
  			//console.log(req.session);
- 			res.render('startpage', {rate: arr,
+ 			res.render('startpage', {rate: results,
  									 username: req.username,
  									 myusername: req.session.user});
  		}

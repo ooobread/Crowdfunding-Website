@@ -7,7 +7,7 @@ router.post('/checklogin', function(req, res, next) {
   //console.log(req.body.inputPassword);
   var username = req.body.inputUserName;
   var password = req.body.inputPassword;
-  var sql = 'select username from user where ? in (select username from user) and ? in (select pwd from user where username= ? )' ;
+  var sql = 'select uid from user where ? in (select uid from user) and ? in (select pwd from user where uid= ? )' ;
   var sqlparams_results = [username];
   var sqlparams_condition = [password, username];
   var sqlparams = sqlparams_results.concat(sqlparams_condition);

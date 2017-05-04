@@ -23,16 +23,16 @@ block content-main
             for informations in information
               h1 Information
               dt Username:
-              dd #{informations.username}
+              dd #{informations['uid']}
               dt Name:
-              dd #{informations.name}
+              dd #{informations['name']}
               dt Hometown:
-              dd #{informations.hometown}
+              dd #{informations['hometown']}
               dt Interests:
-              dd #{informations.interests}
-              if informations.credit
+              dd #{informations['interest']}
+              if informations['credit_card']
                 dt Credit Card Number:
-                dd #{informations.credit}
+                dd #{informations['credit_card']}
           else if projects
             h1 Projects
             p
@@ -41,13 +41,13 @@ block content-main
             if projects != 'No Results'
               #panel-783993.panel-group
                 #display-panel
-                  for project in projects
+                  for project,i in projects
                     .panel.panel-default
                       .panel-heading
-                        a.panel-title(data-toggle='collapse', data-parent='#panel-783993', href='#'+project.name) #{project.name}
-                      div(id = project.name, class = 'panel-collapse.in')
+                        a.panel-title(data-toggle='collapse', data-parent='#panel-783993', href='#project'+i) #{project['pname']}
+                      div(id = 'project'+i, class = 'panel-collapse.in')
                         .panel-body
-                          | #{project.description}
+                          | #{project['description']}
                           a(herf='#') Details
             else
               h4 You have no Project.
@@ -58,10 +58,10 @@ block content-main
                 .col-md-4.column
                   .media
                     .media-left.media-left
-                      a(href='/account/#{user2.name}')
+                      a(href='/account/'+user2['fuid2'])
                         img.media-object(src='...', alt='...')
                       .media-body
-                        h4.media-heading #{user2.name}
+                        h4.media-heading #{user2['fuid2']}
                         |     ...
             else
               h4 You are not following anyone.
@@ -72,10 +72,10 @@ block content-main
                 .col-md-4.column
                   .media
                     .media-left.media-left
-                      a(href='/account/#{user1.name}')
+                      a(href='/account/'+user1['fuid1'])
                         img.media-object(src='...', alt='...')
                       .media-body
-                        h4.media-heading #{user1.name}
+                        h4.media-heading #{user1['fuid1']}
                         |     ...
             else
               h4 You have no follower.
@@ -84,13 +84,13 @@ block content-main
             if pledges != 'No Results'
               #panel-783993.panel-group
                 #display-panel
-                  for project in pledge
+                  for project,i in pledge
                     .panel.panel-default
                       .panel-heading
-                        a.panel-title(data-toggle='collapse', data-parent='#panel-783993', href='#'+project.name) #{project.name}
-                      div(id = project.name, class = 'panel-collapse.in')
+                        a.panel-title(data-toggle='collapse', data-parent='#panel-783993', href='#pledge'+i) #{project['pname']}
+                      div(id = 'pledge'+i, class = 'panel-collapse.in')
                         .panel-body
-                          | #{project.description}
+                          | #{project['description']}
             else
               h4 You have no pledges.
           else if comment
@@ -101,11 +101,11 @@ block content-main
                   for comments,i in comment
                     .panel.panel-default
                       .panel-heading
-                        a.panel-title(data-toggle='collapse', data-parent='#panel-783993', href='#comment'+i) #{comments.date}
+                        a.panel-title(data-toggle='collapse', data-parent='#panel-783993', href='#comment'+i) #{comments['date']}
                       div(id = 'comment'+i, class = 'panel-collapse.in')
                         .panel-body
-                          h4 #{comments.pname}
-                          | #{comments.comment}
+                          h4 #{comments['pname']}
+                          | #{comments['comments']}
             else
               h4 You have no comment.
           else if like
@@ -116,10 +116,10 @@ block content-main
                   for likes,i in like
                     .panel.panel-default
                       .panel-heading
-                        a.panel-title(data-toggle='collapse', data-parent='#panel-783993', href='#like'+i) #{likes.pname}
+                        a.panel-title(data-toggle='collapse', data-parent='#panel-783993', href='#like'+i) #{likes['pname']}
                       div(id = 'like'+i, class = 'panel-collapse.in')
                         .panel-body
-                          | #{likes.description}
+                          | #{likes['description']}
             else
               h4 You have no like.
           else if rate
@@ -130,11 +130,11 @@ block content-main
                   for rates,i in rate
                     .panel.panel-default
                       .panel-heading
-                        a.panel-title(data-toggle='collapse', data-parent='#panel-783993', href='#rates'+i) #{rates.pname}
+                        a.panel-title(data-toggle='collapse', data-parent='#panel-783993', href='#rates'+i) #{rates['pname']}
                       div(id = 'rates'+i, class = 'panel-collapse.in')
                         .panel-body
-                          h4 #{rates.description}
-                          h4 #{rates.score}
+                          h4 #{rates['description']}
+                          h4 #{rates['score']}
             else
               h4 You have no rate.
           else
