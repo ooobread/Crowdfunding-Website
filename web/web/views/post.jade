@@ -1,4 +1,4 @@
-extends navibar-template
+extends navibar-layout
 block title
    title Post Project
 block content
@@ -10,7 +10,7 @@ block content
           input#InputProjectName.form-control(type='text')
         .form-group
           label(for='InputProjectDescription') Project Description
-          textarea#InputProjectDescription.form-control(row='5')
+          textarea#InputProjectDescription.form-control(row='10')
         .form-group
           label(for='exampleInputFile') File input
           input#exampleInputFile(type='file')
