@@ -3,6 +3,7 @@ block title
    title Project_main
 block content-main
   body
+  for result in results
     // header
     header.header
       .container
@@ -10,7 +11,7 @@ block content-main
           .col-md-3.span4
             h3 5234 backers
           .col-md-6.span4
-            h3 $10,350 raised out of $23,000
+            h3 #{result['current_amount']} raised out of #{result['max_fund']}
           .col-md-3.span4
             h3 27 days left to go
          
@@ -22,19 +23,17 @@ block content-main
           .content.col-md-12.col-sm-12.col-xs-12
             .section-block
               .funding-meta
-                h1 PROJECT NAME
-                span.type-meta
-                  i.fa.fa-user
-                  |  user name
-                span.type-meta
+                
+                  h1 #{result['Pname']}
+                  span.type-meta
+                    i.fa.fa-user
+                    |  user name
+                  span.type-meta
                   i.fa.fa-tag
                   a(href='#') crowdfunding
                   | , 
                   a(href='#') launch
                 // img src="assets/img/image-heartbeat.jpg" class="img-responsive" alt="launch HTML5 Crowdfunding"
-                .video-frame
-                p
-                  | Launch will enable you be in run  your own crowdfunding campaign, and be in complete control from concept to crowdfunding to launch.
                 h2 $10,350
                 span.contribution
                   | raised by 
@@ -58,6 +57,8 @@ block content-main
                     a(href='#about', aria-controls='about', role='tab', data-toggle='tab') About
                   li(role='presentation')
                     a(href='#updates', aria-controls='updates', role='tab', data-toggle='tab') Updates
+                  li(role='presentation')
+                    a(href='#comments', aria-controls='comments', role='tab', data-toggle='tab') Comments
             // /tabs
             // tab panes
             .section-block
@@ -65,10 +66,8 @@ block content-main
                 #about.tab-pane.active(role='tabpanel')
                   .about-information
                     h1.section-title ABOUT LAUNCH
-                    p
-                      | Suspendisse luctus at massa sit amet bibendum. Cras commodo congue urna, vel dictum velit bibendum eget. Vestibulum quis risus euismod, facilisis lorem nec, dapibus leo. Quisque sodales eget dolor iaculis dapibus. Vivamus sit amet lacus ipsum. Nullam varius lobortis neque, et efficitur lacus. Quisque dictum tellus nec mi luctus imperdiet. Morbi vel aliquet velit, accumsan dapibus urna. Cras ligula orci, suscipit id eros non, rhoncus efficitur nisi.
-                    p
-                      | Quisque fermentum blandit ex at commodo. Nulla facilisi. Pellentesque porttitor nisi tellus, at gravida mi interdum et. Nulla vestibulum imperdiet libero eget mattis. Vestibulum porttitor, nibh quis sagittis tincidunt, velit orci molestie magna, in congue tortor mauris sit amet eros. Nam dictum gravida tempus.
+                    p Suspendisse luctus at massa sit amet bibendum. Cras commodo congue urna, vel dictum velit bibendum eget. Vestibulum quis risus euismod, facilisis lorem nec, dapibus leo. Quisque sodales eget dolor iaculis dapibus. Vivamus sit amet lacus ipsum. Nullam varius lobortis neque, et efficitur lacus. Quisque dictum tellus nec mi luctus imperdiet. Morbi vel aliquet velit, accumsan dapibus urna. Cras ligula orci, suscipit id eros non, rhoncus efficitur nisi.
+                   
                 #updates.tab-pane(role='tabpanel')
                   .update-information
                     h1.section-title UPDATES
@@ -76,58 +75,24 @@ block content-main
                     .update-post
                       h4.update-title We've started shipping!
                       span.update-date Posted 2 days ago
-                      p
-                        | Suspendisse luctus at massa sit amet bibendum. Cras commodo congue urna, vel dictum velit bibendum eget. Vestibulum quis risus euismod, facilisis lorem nec, dapibus leo. Quisque sodales eget dolor iaculis dapibus. Vivamus sit amet lacus ipsum. Nullam varius lobortis neque, et efficitur lacus. Quisque dictum tellus nec mi luctus imperdiet. Morbi vel aliquet velit, accumsan dapibus urna. Cras ligula orci, suscipit id eros non, rhoncus efficitur nisi.
-                    .update-post
-                      h4.update-title Launch begins manufacturing 
-                      span.update-date Posted 9 days ago
-                      p
-                        | Suspendisse luctus at massa sit amet bibendum. Cras commodo congue urna, vel dictum velit bibendum eget. Vestibulum quis risus euismod, facilisis lorem nec, dapibus leo. Quisque sodales eget dolor iaculis dapibus. Vivamus sit amet lacus ipsum. Nullam varius lobortis neque, et efficitur lacus. Quisque dictum tellus nec mi luctus imperdiet. Morbi vel aliquet velit, accumsan dapibus urna. Cras ligula orci, suscipit id eros non, rhoncus efficitur nisi.
-                    .update-post
-                      h4.update-title Designs have now been finalized
-                      span.update-date Posted 17 days ago
-                      p
-                        | Suspendisse luctus at massa sit amet bibendum. Cras commodo congue urna, vel dictum velit bibendum eget. Vestibulum quis risus euismod, facilisis lorem nec, dapibus leo. Quisque sodales eget dolor iaculis dapibus. Vivamus sit amet lacus ipsum. Nullam varius lobortis neque, et efficitur lacus. Quisque dictum tellus nec mi luctus imperdiet. Morbi vel aliquet velit, accumsan dapibus urna. Cras ligula orci, suscipit id eros non, rhoncus efficitur nisi.
+                      p Suspendisse luctus at massa sit amet bibendum. Cras commodo congue urna, vel dictum velit bibendum eget. Vestibulum quis risus euismod, facilisis lorem nec, dapibus leo. Quisque sodales eget dolor iaculis dapibus. Vivamus sit amet lacus ipsum. Nullam varius lobortis neque, et efficitur lacus. Quisque dictum tellus nec mi luctus imperdiet. Morbi vel aliquet velit, accumsan dapibus urna. Cras ligula orci, suscipit id eros non, rhoncus efficitur nisi.
+                    
                     // /update items
-          // /tabs
-          // /main content
-          .content.col-md-12.col-sm-12.col-xs-12
-            .reward-block
-              h3 $10
-              h2 Early Bird
-              p
-                | Curabitur accumsan sem sed velit ultrices fermentum. Pellentesque rutrum mi nec ipsum elementum aliquet. Sed id vestibulum eros. Nullam nunc velit, viverra sed consequat ac, pulvinar in metus.
-              span
-                i.fa.fa-users
-                |  180 backers
-              a.btn.btn-reward(href='') GET THIS REWARD
-            .reward-block.popular
-              h3 $20
-              h2 Value Bird
-              p
-                | Curabitur accumsan sem sed velit ultrices fermentum. Pellentesque rutrum mi nec ipsum elementum aliquet. Sed id vestibulum eros. Nullam nunc velit, viverra sed consequat ac, pulvinar in metus.
-              span
-                i.fa.fa-users
-                |  320 backers
-              a.btn.btn-reward(href='') GET THIS REWARD
-            .reward-block
-              h3 $30
-              h2 Super Bird
-              p
-                | Curabitur accumsan sem sed velit ultrices fermentum. Pellentesque rutrum mi nec ipsum elementum aliquet. Sed id vestibulum eros. Nullam nunc velit, viverra sed consequat ac, pulvinar in metus.
-              span
-                i.fa.fa-users
-                |  105 backers
-              a.btn.btn-reward(href='') GET THIS REWARD
-            .reward-block.last
-              h3 $50
-              h2 Premium Bird
-              p
-                | Curabitur accumsan sem sed velit ultrices fermentum. Pellentesque rutrum mi nec ipsum elementum aliquet. Sed id vestibulum eros. Nullam nunc velit, viverra sed consequat ac, pulvinar in metus.
-              span
-                i.fa.fa-users
-                |  64 backers
-              a.btn.btn-reward(href='') GET THIS REWARD
+                #comments.tab-pane(role='tabpanel')
+                  .comment-information
+                    h1.section-title COMMENTS
+                    span.comment-title Posted 2 days ago
+                    p comment-title Suspendisse luctus at massa sit amet bibendum. Cras commodo congue urna, vel dictum velit biben
+                    h5.comment-title User name
+                    h4 Leave a Comment:
+                    form(role='form')
+                    .form-group
+                    textarea.form-control(rows='3', required='')
+                    button.btn.btn-success(type='submit') Submit
+                    br
+                    br
+                    
+          
     footer.footer
       .container
     // Global jQuery
