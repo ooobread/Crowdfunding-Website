@@ -3,7 +3,6 @@ block title
    title Project_main
 block content-main
   body
-  for result in results
     // header
     header.header
       .container
@@ -11,7 +10,7 @@ block content-main
           .col-md-3.span4
             h3 5234 backers
           .col-md-6.span4
-            h3 #{result['current_amount']} raised out of #{result['max_fund']}
+            h3 #{current_amount} raised out of #{max_fund}
           .col-md-3.span4
             h3 27 days left to go
          
@@ -23,8 +22,8 @@ block content-main
           .content.col-md-12.col-sm-12.col-xs-12
             .section-block
               .funding-meta
-                
-                  h1 #{result['Pname']}
+          
+                  h1 #{Pname}
                   span.type-meta
                     i.fa.fa-user
                     |  user name
@@ -78,19 +77,22 @@ block content-main
                       p Suspendisse luctus at massa sit amet bibendum. Cras commodo congue urna, vel dictum velit bibendum eget. Vestibulum quis risus euismod, facilisis lorem nec, dapibus leo. Quisque sodales eget dolor iaculis dapibus. Vivamus sit amet lacus ipsum. Nullam varius lobortis neque, et efficitur lacus. Quisque dictum tellus nec mi luctus imperdiet. Morbi vel aliquet velit, accumsan dapibus urna. Cras ligula orci, suscipit id eros non, rhoncus efficitur nisi.
                     
                     // /update items
-                #comments.tab-pane(role='tabpanel')
-                  .comment-information
-                    h1.section-title COMMENTS
-                    span.comment-title Posted 2 days ago
-                    p comment-title Suspendisse luctus at massa sit amet bibendum. Cras commodo congue urna, vel dictum velit biben
-                    h5.comment-title User name
-                    h4 Leave a Comment:
-                    form(role='form')
-                    .form-group
-                    textarea.form-control(rows='3', required='')
-                    button.btn.btn-success(type='submit') Submit
-                    br
-                    br
+        
+                
+                 #comments.tab-pane(role='tabpanel')
+                    
+                   .comment-information             
+                     h1.section-title COMMENTS
+                     for infor in info
+                       span.comment-title Posted on #{infor.date}
+                       p #{infor.comment}
+                       h5.comment-title here is the title
+                     h4 Leave a Comment:
+                     form#usrform(action='/project/' + pid + '/comment',method = 'get')
+                       textarea(class="form-control", rows='3', name='comment', form='usrform')
+                       button.btn.btn-success(type='submit') Submit
+                       br
+                       br
                     
           
     footer.footer
