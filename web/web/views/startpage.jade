@@ -33,6 +33,8 @@ block content-main
               if informations['credit_card']
                 dt Credit Card Number:
                 dd #{informations['credit_card']}
+              a(href='/account/#{username}/editprofile')
+                button.btn.btn-default(type='button') Edit
           else if projects
             h1 Projects
             p
