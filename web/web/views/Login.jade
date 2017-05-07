@@ -15,6 +15,9 @@ block content-front
             input(type='checkbox', value='remember-me')
             |  Remember me
         button.btn.btn-lg.btn-primary.btn-block(type='submit') Sign in
+      p
+      form.form-signin(action='/users/register')
+        button.btn.btn-lg.btn-primary.btn-block(type='submit') Register
         if message == 'again'
           .alert.alert-dismissable.alert-warning
             button.close(type='button', data-dismiss='alert', aria-hidden='true') ×

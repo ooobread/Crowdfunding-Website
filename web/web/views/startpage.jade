@@ -84,13 +84,13 @@ block content-main
             if pledges != 'No Results'
               #panel-783993.panel-group
                 #display-panel
-                  for project,i in pledge
+                  for pledges,i in pledge
                     .panel.panel-default
                       .panel-heading
-                        a.panel-title(data-toggle='collapse', data-parent='#panel-783993', href='#pledge'+i) #{project['pname']}
-                      div(id = 'pledge'+i, class = 'panel-collapse.in')
+                        a.panel-title(data-toggle='collapse', data-parent='#panel-783993', href='#pledges'+i) #{pledges['pname']}
+                      div(id = 'pledges'+i, class = 'panel-collapse.in')
                         .panel-body
-                          | #{project['description']}
+                          | #{pledges['description']}
             else
               h4 You have no pledges.
           else if comment
