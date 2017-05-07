@@ -22,7 +22,6 @@ router.get('/:pid', function(req,res,next){
 router.post('/result', function(req, res, next) {
 	var searchtext = req.body.searchtext;
 	var searchselect = req.body.searchselect;
-	console.log(searchtext);
 	if (searchselect == 'name'){
 		var sql = "select Pname,description,pid from project where Pname like '%" + searchtext + "%'";
 	}
