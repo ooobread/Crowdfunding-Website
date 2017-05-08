@@ -6,54 +6,87 @@ var url = require('url');
 router.param('pid', function(req, res, next, pid) {
 
 	req.pid = pid;
-	console.log(req.pid);
+	//console.log(req.pid);
 	next();	
 });
 
 
 router.get('/:pid', function(req,res,next){
-	var sql = "select * from project left join user on uid  = pruid left join comment on cpid = pid where pid = ? ";
+	var sql = "select * from project left join user on uid  = pruid where pid = ? ";
 	var sqlParams = [req.pid];
-	console.log(sqlParams);
+	var uid = req.session.user;
 	var arr = [];
-	db.query(sql, sqlParams, function(results){
-			for(i =0;i<results.length;i++){
-				var column = {};
-				column.comment = results[i].comments;
-				column.date = results[i].date;
-				column.cuid = results[i].cuid;
-				arr.push(column);
-				//console.log(arr[i]);
-			}
+	var info1 = {};
+	db.query(sql, sqlParams, function(results,next){
 			
-			var info1 = {};
+			
 			info1.des = results[0].description;
 			info1.pid= results[0].pid;
 			info1.Pname= results[0].Pname;
 			info1.current_amount = results[0].current_amount;
 			info1.max_fund = results[0].max_fund;
 			//console.log(column.comment);
+			
+	});
+	
+	var sql2 = "select * from comment left join user on uid  = cuid where cpid = ? ORDER BY date DESC";
+	
+	db.query(sql2,sqlParams, function(results,next){
+		
+		for(i =0;i<results.length;i++){	
+			var column = {};
+			column.comment = results[i].comments;
+			column.date = results[i].date;
+			column.cuid = results[i].cuid;
+			arr.push(column);
+			//console.log(arr[i]);
+		}
+		
+	});
+		
+	var sql3 = "select * from likes where luid = " + uid + " and lpid = " + req.pid;
+	console.log(sql3);
+	db.query(sql3, function(req,results){
+	console.log(results);
+		if (results == ""){
+			console.log('0');
 			res.render('project_main',{info : arr,
 				des : info1.des,
 				Pname:info1.Pname,
 				current_amount :info1.current_amount,
 				max_fund :info1.max_fund,
-				pid: info1.pid
-			  });
+				pid: info1.pid,
+				is_like : '0'
+			 });
+		}
+		else{
+			console.log('1');
+			res.render('project_main',{info : arr,
+				des : info1.des,
+				Pname:info1.Pname,
+				current_amount :info1.current_amount,
+				max_fund :info1.max_fund,
+				pid: info1.pid,
+				is_like : '1'
+			});
+		}
 			
 	});
 	
 });
 
 router.get('/:pid/comment', function(req,res,next){
-	var sql = "INSERT INTO comment values (1, ?,?, now())";
-	var sqlparam = [req.pid];
-	var com = [req.query.comment];
-	var sqlparam = sqlparam.concat(com);
-	console.log(sqlparam);
-	//console.log(req.query.comment);
-	db.query(sql, sqlparam, function(results){
+	
+	var uid = req.session.user;
+	var pid = req.pid;
+	var com = req.query.comment;
+	var sql = "INSERT INTO comment values (" + uid +", " +pid +",'" +com + "', now())";
+
+
+	console.log(sql);
+	db.query(sql, function(results){
 		res.redirect('/project/' + req.pid);
+		
 	});
 	
 });
@@ -86,5 +119,151 @@ router.post('/result', function(req, res, next) {
 		
 	  });
 });
+router.get('/like/:pid',function(req,res,next){
+	var uid = req.session.user;
+	var pid = [req.pid];
+	//console.log(p);
+	//console.log(uid);
+	sql = "INSERT INTO LIKES VALUES(" + uid + "," + pid + ")";
+	db.query(sql, function(res,next){
+		
+	});
+	var sql = "select * from project left join user on uid  = pruid where pid = ? ";
+	var sqlParams = [req.pid];
+	var uid = req.session.user;
+	var arr = [];
+	var info1 = {};
+	db.query(sql, sqlParams, function(results,next){
+			
+			
+			info1.des = results[0].description;
+			info1.pid= results[0].pid;
+			info1.Pname= results[0].Pname;
+			info1.current_amount = results[0].current_amount;
+			info1.max_fund = results[0].max_fund;
+			//console.log(column.comment);
+			
+	});
+	
+	var sql2 = "select * from comment left join user on uid  = cuid where cpid = ? ORDER BY date DESC";
+	
+	db.query(sql2,sqlParams, function(results,next){
+		
+		for(i =0;i<results.length;i++){	
+			var column = {};
+			column.comment = results[i].comments;
+			column.date = results[i].date;
+			column.cuid = results[i].cuid;
+			arr.push(column);
+			//console.log(arr[i]);
+		}
+		
+	});
+		
+	var sql3 = "select * from likes where luid = " + uid + " and lpid = " + req.pid;
+	console.log(sql3);
+	db.query(sql3, function(req,results){
+	console.log(results);
+		if (results == ""){
+			console.log('0');
+			res.render('project_main',{info : arr,
+				des : info1.des,
+				Pname:info1.Pname,
+				current_amount :info1.current_amount,
+				max_fund :info1.max_fund,
+				pid: info1.pid,
+				is_like : '0'
+			 });
+		}
+		else{
+			console.log('1');
+			res.render('project_main',{info : arr,
+				des : info1.des,
+				Pname:info1.Pname,
+				current_amount :info1.current_amount,
+				max_fund :info1.max_fund,
+				pid: info1.pid,
+				is_like : '1'
+			});
+		}
+			
+	});
+	
+});
+
+router.get('/dislike/:pid',function(req,res,next){
+	var uid = req.session.user;
+	var pid = [req.pid];
+	//console.log(p);
+	//console.log(uid);
+	sql = "DELETE FROM LIKES WHERE luid ="  + uid+ " and lpid =  " + pid;
+	db.query(sql, function(res,next){
+		
+	});
+	var sql = "select * from project left join user on uid  = pruid where pid = ? ";
+	var sqlParams = [req.pid];
+	var uid = req.session.user;
+	var arr = [];
+	var info1 = {};
+	db.query(sql, sqlParams, function(results,next){
+			
+			
+			info1.des = results[0].description;
+			info1.pid= results[0].pid;
+			info1.Pname= results[0].Pname;
+			info1.current_amount = results[0].current_amount;
+			info1.max_fund = results[0].max_fund;
+			//console.log(column.comment);
+			
+	});
+	
+	var sql2 = "select * from comment left join user on uid  = cuid where cpid = ? ORDER BY date DESC";
+	
+	db.query(sql2,sqlParams, function(results,next){
+		
+		for(i =0;i<results.length;i++){	
+			var column = {};
+			column.comment = results[i].comments;
+			column.date = results[i].date;
+			column.cuid = results[i].cuid;
+			arr.push(column);
+			//console.log(arr[i]);
+		}
+		
+	});
+		
+	var sql3 = "select * from likes where luid = " + uid + " and lpid = " + req.pid;
+	console.log(sql3);
+	db.query(sql3, function(req,results){
+	console.log(results);
+		if (results == ""){
+			console.log('0');
+			res.render('project_main',{info : arr,
+				des : info1.des,
+				Pname:info1.Pname,
+				current_amount :info1.current_amount,
+				max_fund :info1.max_fund,
+				pid: info1.pid,
+				is_like : '0'
+			 });
+		}
+		else{
+			console.log('1');
+			res.render('project_main',{info : arr,
+				des : info1.des,
+				Pname:info1.Pname,
+				current_amount :info1.current_amount,
+				max_fund :info1.max_fund,
+				pid: info1.pid,
+				is_like : '1'
+			});
+		}
+			
+	});
+	
+
+});
+
+
 
 module.exports = router;

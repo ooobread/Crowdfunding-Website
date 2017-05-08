@@ -1,0 +1,80 @@
+extends navibar-layout
+block title
+   title Project_main
+block content-main
+  body
+    // header
+    header.header
+      .container
+        .row
+          .col-md-12.span4
+            h3 #{current_amount} raised out of #{max_fund}
+         
+    // /header
+    // main content
+    .main-content
+      .container
+        .row
+          .content.col-md-12.col-sm-12.col-xs-12
+            .section-block
+              .funding-meta
+                  h1 #{Pname}
+                  if is_like == '0' 
+                    a.btn.btn-default(href='/project/like/' + pid , role='button') Like
+                  else
+                    a.btn.btn-default(href='/project/dislike/' + pid , role='button') Liked
+              
+            // tabs
+            .section-block
+              .section-tabs
+                ul.nav.nav-tabs(role='tablist')
+                  li.active(role='presentation')
+                    a(href='#about', aria-controls='about', role='tab', data-toggle='tab') About
+                  li(role='presentation')
+                    a(href='#updates', aria-controls='updates', role='tab', data-toggle='tab') Updates
+                  li(role='presentation')
+                    a(href='#comments', aria-controls='comments', role='tab', data-toggle='tab') Comments
+            // /tabs
+            // tab panes
+            .section-block
+              .tab-content
+                #about.tab-pane.active(role='tabpanel')
+                  .about-information
+                    h1.section-title ABOUT LAUNCH
+                    p #{des}
+                   
+                #updates.tab-pane(role='tabpanel')
+                  .update-information
+                    h1.section-title UPDATES
+                    // update items
+                    .update-post
+                      h4.update-title We've started shipping!
+                      span.update-date Posted 2 days ago
+                      p Suspendisse luctus at massa sit amet bibendum. Cras commodo congue urna, vel dictum velit bibendum eget. Vestibulum quis risus euismod, facilisis lorem nec, dapibus leo. Quisque sodales eget dolor iaculis dapibus. Vivamus sit amet lacus ipsum. Nullam varius lobortis neque, et efficitur lacus. Quisque dictum tellus nec mi luctus imperdiet. Morbi vel aliquet velit, accumsan dapibus urna. Cras ligula orci, suscipit id eros non, rhoncus efficitur nisi.
+                    
+                    // /update items
+        
+                
+                 #comments.tab-pane(role='tabpanel')
+                    
+                   .comment-information             
+                     h1.section-title COMMENTS
+                     for infor in info
+                       span.comment-title Posted on #{infor.date}
+                       p #{infor.comment}
+                       h5.comment-title #{infor.cuid}
+                     h4 Leave a Comment:
+                     form#usrform(action='/project/' + pid + '/comment',method = 'get')
+                       textarea(class="form-control", rows='3', name='comment', form='usrform')
+                       button.btn.btn-success(type='submit') Submit
+                       br
+                       br
+                    
+          
+    footer.footer
+      .container
+    // Global jQuery
+    script(type='text/javascript', src='assets/js/jquery-1.12.3.min.js')
+    script(type='text/javascript', src='assets/js/bootstrap.min.js')
+    // Template JS
+    script(type='text/javascript', src='assets/js/main.js')
