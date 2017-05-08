@@ -5,29 +5,57 @@ var url = require('url');
 
 router.param('username', function(req, res, next, username) {
 	// 对name进行验证或其他处理……
-	console.log('param: '+username);
+	//console.log('param: '+username);
 	req.username = username;
 	next();	
 });
 
-router.get('/:username', function(req, res, next) {
+router.param('location', function(req, res, next, location) {
+	// 对name进行验证或其他处理……
+	//console.log('param: '+username);
+	req.location = location;
+	next();	
+});
+
+router.get('/:username/information', function(req, res, next) {
 	//console.log('get: '+ req.username);
 	//var username = req.session.username;
-	var sql = 'select uid, name, hometown, interest, credit_card from user where uid = ?' ;
- 	var sqlParams = [req.username];
+	var user = {
+		guest: 'false',
+		followed: 'false'
+	}
+	var sql = 'select * from follow where ? in (select fuid2 from follow where fuid1 = ?)' ;
+ 	var sqlParams = [req.username, req.session.user];
+ 	db.query(sql, sqlParams, function(results){
+ 		//console.log(results);
+ 		if(results!=''){
+ 			console.log('guest:yes');
+ 			user.followed = 'true';
+ 		}
+ 	});
+ 	console.log('guest:'+user.guest);
+	if(req.username != req.session.user){
+		user.guest = 'true';
+	}
+	sql = 'select uid, name, hometown, interest, credit_card from user where uid = ?' ;
+ 	sqlParams = [req.username];
  	//console.log(sqlParams);
  	db.query(sql, sqlParams, function(results){
  		//console.log(results);
  		if(results==''){
  			console.log('no');
- 			res.render('startpage', {username: req.username,
+ 			res.render('startpage', {location: 'information',
+ 									 user: user,
+ 									 username: req.username,
  									 myusername: req.session.user});
  		}
  		else{
  			console.log('yes');
  			//console.log(results[0]);
  			//console.log(req.session);
- 			res.render('startpage', {information: results,
+ 			res.render('startpage', {location: 'information',
+ 				 					 user: user,
+ 									 information: results,
  									 username: req.username,
  									 myusername: req.session.user});
  		}
@@ -37,8 +65,24 @@ router.get('/:username', function(req, res, next) {
 
 router.get('/:username/projects', function(req, res, next) {
 	//var username = req.session.username;
-	var sql = 'select pname, description from project where pruid = ?' ;
- 	var sqlParams = [req.username];
+	var user = {
+		guest: 'false',
+		followed: 'false'
+	}
+	var sql = 'select * from follow where ? in (select fuid2 from follow where fuid1 = ?)' ;
+ 	var sqlParams = [req.username, req.session.user];
+ 	db.query(sql, sqlParams, function(results){
+ 		//console.log(results);
+ 		if(results!=''){
+ 			console.log('guest:yes');
+ 			user.followed = 'true';
+ 		}
+ 	});
+	if(req.username != req.session.user){
+		user.guest = 'true';
+	}
+	sql = 'select pid, pname, description from project where pruid = ?' ;
+ 	sqlParams = [req.username];
  	//console.log(sqlParams);
  	db.query(sql, sqlParams, function(results){
  		//console.log(results);
@@ -46,7 +90,9 @@ router.get('/:username/projects', function(req, res, next) {
  			console.log('no');
  		    var arr = [];
  			arr.push('No Results');
- 			res.render('startpage', {projects: arr,
+ 			res.render('startpage', {location: 'projects',
+ 									 user: user,
+ 									 projects: arr,
  									 username: req.username,
  									 myusername: req.session.user});
  		}
@@ -54,7 +100,9 @@ router.get('/:username/projects', function(req, res, next) {
  			console.log('yes');
  			//console.log(results[0]);
  			//console.log(req.session);
- 			res.render('startpage', {projects: results,
+ 			res.render('startpage', {location: 'projects',
+ 									 user: user,
+ 									 projects: results,
  									 username: req.username,
  									 myusername: req.session.user});
  		}
@@ -64,8 +112,24 @@ router.get('/:username/projects', function(req, res, next) {
 
 router.get('/:username/following', function(req, res, next) {
 	//var username = req.session.username;
-	var sql = 'select fuid2 from follow where fuid1 = ?' ;
- 	var sqlParams = [req.username];
+	var user = {
+		guest: 'false',
+		followed: 'false'
+	}
+	var sql = 'select * from follow where ? in (select fuid2 from follow where fuid1 = ?)' ;
+ 	var sqlParams = [req.username, req.session.user];
+ 	db.query(sql, sqlParams, function(results){
+ 		//console.log(results);
+ 		if(results!=''){
+ 			console.log('guest:yes');
+ 			user.followed = 'true';
+ 		}
+ 	});
+	if(req.username != req.session.user){
+		user.guest = 'true';
+	}
+	sql = 'select fuid2 from follow where fuid1 = ?' ;
+ 	sqlParams = [req.username];
  	//console.log(sqlParams);
  	db.query(sql, sqlParams, function(results){
  		//console.log(results);
@@ -73,7 +137,9 @@ router.get('/:username/following', function(req, res, next) {
  			console.log('no');
  			var arr = [];
  			arr.push('No Results');
- 			res.render('startpage', {following: arr,
+ 			res.render('startpage', {location: 'following',
+ 									 user: user,
+ 									 following: arr,
  									 username: req.username,
  									 myusername: req.session.user});
  		}
@@ -81,7 +147,9 @@ router.get('/:username/following', function(req, res, next) {
  			console.log('yes');
  			//console.log(results[0]);
  			//console.log(req.session);
- 			res.render('startpage', {following: results,
+ 			res.render('startpage', {location: 'following',
+ 									 user: user,
+ 									 following: results,
  									 username: req.username,
  									 myusername: req.session.user});
  		}
@@ -91,8 +159,24 @@ router.get('/:username/following', function(req, res, next) {
 
 router.get('/:username/follower', function(req, res, next) {
 	//var username = req.session.username;
-	var sql = 'select fuid1 from follow where fuid2 = ?' ;
- 	var sqlParams = [req.username];
+	var user = {
+		guest: 'false',
+		followed: 'false'
+	}
+	var sql = 'select * from follow where ? in (select fuid2 from follow where fuid1 = ?)' ;
+ 	var sqlParams = [req.username, req.session.user];
+ 	db.query(sql, sqlParams, function(results){
+ 		//console.log(results);
+ 		if(results!=''){
+ 			console.log('guest:yes');
+ 			user.followed = 'true';
+ 		}
+ 	});
+	if(req.username != req.session.user){
+		user.guest = 'true';
+	}
+	sql = 'select fuid1 from follow where fuid2 = ?' ;
+ 	sqlParams = [req.username];
  	//console.log(sqlParams);
  	db.query(sql, sqlParams, function(results){
  		//console.log(results);
@@ -100,7 +184,9 @@ router.get('/:username/follower', function(req, res, next) {
  			console.log('no');
  			var arr = [];
  			arr.push('No Results');
- 			res.render('startpage', {follower: arr,
+ 			res.render('startpage', {location: 'follower',
+ 									 user: user,
+ 									 follower: arr,
  									 username: req.username,
  									 myusername: req.session.user});
  		}
@@ -108,7 +194,9 @@ router.get('/:username/follower', function(req, res, next) {
  			console.log('yes');
  			//console.log(results[0]);
  			//console.log(req.session);
- 			res.render('startpage', {follower: results,
+ 			res.render('startpage', {location: 'follower',
+ 									 user: user,
+ 									 follower: results,
  									 username: req.username,
  									 myusername: req.session.user});
  		}
@@ -118,8 +206,24 @@ router.get('/:username/follower', function(req, res, next) {
 
 router.get('/:username/pledges', function(req, res, next) {
 	//var username = req.session.username;
-	var sql = 'select project.pname, project.description from project, donate where project.pid = donate.dpid and donate.duid = ?' ;
- 	var sqlParams = [req.username];
+	var user = {
+		guest: 'false',
+		followed: 'false'
+	}
+	var sql = 'select * from follow where ? in (select fuid2 from follow where fuid1 = ?)' ;
+ 	var sqlParams = [req.username, req.session.user];
+ 	db.query(sql, sqlParams, function(results){
+ 		//console.log(results);
+ 		if(results!=''){
+ 			console.log('guest:yes');
+ 			user.followed = 'true';
+ 		}
+ 	});
+	if(req.username != req.session.user){
+		user.guest = 'true';
+	}
+	sql = 'select project.pname, project.description from project, donate where project.pid = donate.dpid and donate.duid = ?' ;
+ 	sqlParams = [req.username];
  	//console.log(sqlParams);
  	db.query(sql, sqlParams, function(results){
  		//console.log(results);
@@ -127,7 +231,9 @@ router.get('/:username/pledges', function(req, res, next) {
  			console.log('no');
  			var arr = [];
  			arr.push('No Results');
- 			res.render('startpage', {pledge: arr,
+ 			res.render('startpage', {location: 'pledges',
+ 									 user: user,
+ 									 pledge: arr,
  									 username: req.username,
  									 myusername: req.session.user});
  		}
@@ -135,7 +241,9 @@ router.get('/:username/pledges', function(req, res, next) {
  			console.log('yes');
  			//console.log(results[0]);
  			//console.log(req.session);
- 			res.render('startpage', {pledge: results,
+ 			res.render('startpage', {location: 'pledges',
+ 									 user: user,
+ 									 pledge: results,
  									 username: req.username,
  									 myusername: req.session.user});
  		}
@@ -145,8 +253,24 @@ router.get('/:username/pledges', function(req, res, next) {
 
 router.get('/:username/comments', function(req, res, next) {
 	//var username = req.session.username;
-	var sql = 'select project.pname, comment.comments, comment.date from project, comment where project.pid = comment.cpid and comment.cuid = ?' ;
- 	var sqlParams = [req.username];
+	var user = {
+		guest: 'false',
+		followed: 'false'
+	}
+	var sql = 'select * from follow where ? in (select fuid2 from follow where fuid1 = ?)' ;
+ 	var sqlParams = [req.username, req.session.user];
+ 	db.query(sql, sqlParams, function(results){
+ 		//console.log(results);
+ 		if(results!=''){
+ 			console.log('guest:yes');
+ 			user.followed = 'true';
+ 		}
+ 	});
+	if(req.username != req.session.user){
+		user.guest = 'true';
+	}
+	sql = 'select project.pname, comment.comments, comment.date from project, comment where project.pid = comment.cpid and comment.cuid = ?' ;
+ 	sqlParams = [req.username];
  	//console.log(sqlParams);
  	db.query(sql, sqlParams, function(results){
  		//console.log(results);
@@ -154,7 +278,9 @@ router.get('/:username/comments', function(req, res, next) {
  			console.log('no');
  			var arr = [];
  			arr.push('No Results');
- 			res.render('startpage', {comment: arr,
+ 			res.render('startpage', {location: 'comments',
+ 									 user: user,
+ 									 comment: arr,
  									 username: req.username,
  									 myusername: req.session.user});
  		}
@@ -163,7 +289,9 @@ router.get('/:username/comments', function(req, res, next) {
  			//console.log(results[0]);
  			//console.log(req.session);
  			console.log('comments: '+req.username);
- 			res.render('startpage', {comment: results,
+ 			res.render('startpage', {location: 'comments',
+ 									 user: user,
+ 									 comment: results,
  									 username: req.username,
  									 myusername: req.session.user});
  		}
@@ -173,8 +301,24 @@ router.get('/:username/comments', function(req, res, next) {
 
 router.get('/:username/likes', function(req, res, next) {
 	//var username = req.session.username;
-	var sql = 'select project.pname, project.description from project, likes where project.pid = likes.lpid and likes.luid = ?' ;
- 	var sqlParams = [req.username];
+	var user = {
+		guest: 'false',
+		followed: 'false'
+	}
+	var sql = 'select * from follow where ? in (select fuid2 from follow where fuid1 = ?)' ;
+ 	var sqlParams = [req.username, req.session.user];
+ 	db.query(sql, sqlParams, function(results){
+ 		//console.log(results);
+ 		if(results!=''){
+ 			console.log('guest:yes');
+ 			user.followed = 'true';
+ 		}
+ 	});
+	if(req.username != req.session.user){
+		user.guest = 'true';
+	}
+	sql = 'select project.pname, project.description from project, likes where project.pid = likes.lpid and likes.luid = ?' ;
+ 	sqlParams = [req.username];
  	//console.log(sqlParams);
  	db.query(sql, sqlParams, function(results){
  		//console.log(results);
@@ -182,7 +326,9 @@ router.get('/:username/likes', function(req, res, next) {
  			console.log('no');
  			var arr = [];
  			arr.push('No Results');
- 			res.render('startpage', {like: arr,
+ 			res.render('startpage', {location: 'likes',
+ 									 user: user,
+ 									 like: arr,
  									 username: req.username,
  									 myusername: req.session.user});
  		}
@@ -190,7 +336,9 @@ router.get('/:username/likes', function(req, res, next) {
  			console.log('yes');
  			//console.log(results[0]);
  			//console.log(req.session);
- 			res.render('startpage', {like: results,
+ 			res.render('startpage', {location: 'likes',
+ 									 user: user,
+ 									 like: results,
  									 username: req.username,
  									 myusername: req.session.user});
  		}
@@ -200,8 +348,24 @@ router.get('/:username/likes', function(req, res, next) {
 
 router.get('/:username/rates', function(req, res, next) {
 	//var username = req.session.username;
-	var sql = 'select project.pname, project.description, rate.score from project, rate where project.pid = rate.rpid and rate.ruid = ?' ;
- 	var sqlParams = [req.username];
+	var user = {
+		guest: 'false',
+		followed: 'false'
+	}
+	var sql = 'select * from follow where ? in (select fuid2 from follow where fuid1 = ?)' ;
+ 	var sqlParams = [req.username, req.session.user];
+ 	db.query(sql, sqlParams, function(results){
+ 		//console.log(results);
+ 		if(results!=''){
+ 			console.log('guest:yes');
+ 			user.followed = 'true';
+ 		}
+ 	});
+	if(req.username != req.session.user){
+		user.guest = 'true';
+	}
+	sql = 'select project.pname, project.description, rate.score from project, rate where project.pid = rate.rpid and rate.ruid = ?' ;
+ 	sqlParams = [req.username];
  	//console.log(sqlParams);
  	db.query(sql, sqlParams, function(results){
  		//console.log(results);
@@ -209,7 +373,9 @@ router.get('/:username/rates', function(req, res, next) {
  			console.log('no');
  			var arr = [];
  			arr.push('No Results');
- 			res.render('startpage', {rate: arr,
+ 			res.render('startpage', {location: 'rates',
+ 									 user: user,
+ 									 rate: arr,
  									 username: req.username,
  									 myusername: req.session.user});
  		}
@@ -217,7 +383,9 @@ router.get('/:username/rates', function(req, res, next) {
  			console.log('yes');
  			//console.log(results[0]);
  			//console.log(req.session);
- 			res.render('startpage', {rate: results,
+ 			res.render('startpage', {location: 'rates',
+ 									 user: user,
+ 									 rate: results,
  									 username: req.username,
  									 myusername: req.session.user});
  		}
@@ -227,8 +395,24 @@ router.get('/:username/rates', function(req, res, next) {
 
 router.get('/:username/editprofile', function(req, res, next) {
 	console.log('editprofile');
-	var sql = 'select pwd, name, hometown, interest, credit_card from user where uid = ?' ;
- 	var sqlParams = [req.username];
+	var user = {
+		guest: 'false',
+		followed: 'false'
+	}
+	var sql = 'select * from follow where ? in (select fuid2 from follow where fuid1 = ?)' ;
+ 	var sqlParams = [req.username, req.session.user];
+ 	db.query(sql, sqlParams, function(results){
+ 		//console.log(results);
+ 		if(results!=''){
+ 			console.log('guest:yes');
+ 			user.followed = 'true';
+ 		}
+ 	});
+	if(req.username != req.session.user){
+		user.guest = 'true';
+	}
+	sql = 'select pwd, name, hometown, interest, credit_card from user where uid = ?' ;
+ 	sqlParams = [req.username];
  	db.query(sql, sqlParams, function(results){
  		//console.log(results);
  		if(results==''){
@@ -267,11 +451,11 @@ router.post('/:username/updateprofile', function(req, res, next) {
  			console.log('updatecheck:yes');
  			//console.log(results[0]);
  			//console.log(req.session);
- 			var password = results[0].pwd;
- 			var name = results[0].name;
- 			var hometown = results[0].hometown;
- 			var interest = results[0].interest;
- 			var credit = results[0].credit_card;
+ 			password = results[0].pwd;
+ 			name = results[0].name;
+ 			hometown = results[0].hometown;
+ 			interest = results[0].interest;
+ 			credit = results[0].credit_card;
  		}
  	});
  	if(password != req.body.inputPassword && req.body.inputPassword){
@@ -302,6 +486,63 @@ router.post('/:username/updateprofile', function(req, res, next) {
  		}
  	});
 
+});
+
+router.get('/:username/follow/:location', function(req, res, next) {
+	//var username = req.session.username;
+	console.log('location: '+req.location);
+	var user = {
+		guest: 'false',
+		followed: 'true'
+	}
+	if(req.username != req.session.user){
+		user.guest = 'true';
+	}
+	//console.log(req.username);
+	var sql = 'insert into follow (fuid1, fuid2) values (?, ?)' ;
+ 	var sqlParams = [req.session.user, req.username];
+ 	//console.log(sqlParams);
+ 	db.query(sql, sqlParams, function(results){
+ 		//console.log(results);
+ 		if(results==''){
+ 			console.log('no');
+ 			res.redirect('/account/'+req.username+'/'+req.location);
+ 		}
+ 		else{
+ 			console.log('yes');
+ 			//console.log(results[0]);
+ 			//console.log(req.session);
+ 			res.redirect('/account/'+req.username+'/'+req.location);
+ 		}
+ 	});
+	//res.sendFile(path.join(__dirname, '../static_views/Login.html'));
+});
+
+router.get('/:username/unfollow/:location', function(req, res, next) {
+	//var username = req.session.username;
+	console.log('location: '+req.location);
+	var user = {
+		guest: 'true',
+		followed: 'false'
+	}
+	//console.log(req.username);
+	var sql = 'delete from follow where fuid1=? and fuid2=?' ;
+ 	var sqlParams = [req.session.user, req.username];
+ 	//console.log(sqlParams);
+ 	db.query(sql, sqlParams, function(results){
+ 		//console.log(results);
+ 		if(results==''){
+ 			console.log('no');
+ 			res.redirect('/account/'+req.username+'/'+req.location);
+ 		}
+ 		else{
+ 			console.log('yes');
+ 			//console.log(results[0]);
+ 			//console.log(req.session);
+ 			res.redirect('/account/'+req.username+'/'+req.location);
+ 		}
+ 	});
+	//res.sendFile(path.join(__dirname, '../static_views/Login.html'));
 });
 
 module.exports = router;

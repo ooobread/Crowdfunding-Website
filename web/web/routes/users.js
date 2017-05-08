@@ -20,7 +20,7 @@ router.post('/checklogin', function(req, res, next) {
       console.log('Success!');
       req.session.user = username;
       req.session.pwd = password;
-      res.redirect('/account/'+username);
+      res.redirect('/account/'+username+'/information');
  	}
   });
 });
@@ -52,7 +52,7 @@ router.post('/createuser', function(req, res, next) {
         console.log('Register: Success!');
         req.session.user = username;
         req.session.pwd = password;
-        res.redirect('/account/'+username);
+        res.redirect('/account/'+username+'/information');
       });
     }
   });

@@ -23,3 +23,11 @@ exports.query = function(sql, sqlparams, results){
 	});
 };
 
+exports.logbehavior = function(username, behavior, project, results){
+	var sql = 'insert into behavior (buid, behave, bpid, bdate) values (?, ?, ?, now())';
+	var sqlParams = [username, behavior, project];
+	query(sql, salParams, function (data){
+		results(data);
+	});
+};
+

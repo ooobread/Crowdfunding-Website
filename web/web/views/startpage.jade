@@ -3,10 +3,23 @@ block title
    title My Account
 block content-main
       .row.clearfix
+        .col-md-12.column
+          .page-header
+            h1
+              | #{username}
+              - console.log(user.guest);
+              - console.log(user.followed);
+              if user.guest == 'true'
+                if user.followed == 'true'
+                  a.btn.btn-default(href='/account/#{username}/unfollow/#{location}', role='button') Unfollow
+                else
+                  - console.log(location);
+                  a.btn.btn-default(href='/account/#{username}/follow/#{location}', role='button') Follow
+      .row.clearfix
         .col-md-3.column
           h1 Menu List
           .list-group
-            a.list-group-item(href='/account/#{username}') My Account
+            a.list-group-item(href='/account/#{username}/information') My Account
             a.list-group-item(href='/account/#{username}/projects') My Projects
             a.list-group-item(href='/account/#{username}/following') My Following
             a.list-group-item(href='/account/#{username}/follower') My Follower
@@ -14,12 +27,14 @@ block content-main
             a.list-group-item(href='/account/#{username}/comments') My Comments
             a.list-group-item(href='/account/#{username}/likes') My Likes
             a.list-group-item(href='/account/#{username}/rates') My Rates
-        .col-md-9.column
+        .col-md-5.column
           //- console.log(projects);
           //- console.log(following); 
           //- console.log(follower);
-          //- console.log(information);
+          //- console.log(req.session.user);
+          //- var location;
           if information
+            //- location = 'information';
             for informations in information
               h1 Information
               dt Username:
@@ -30,12 +45,12 @@ block content-main
               dd #{informations['hometown']}
               dt Interests:
               dd #{informations['interest']}
-              if informations['credit_card']
+              if user.guest == 'false'
                 dt Credit Card Number:
                 dd #{informations['credit_card']}
-              a(href='/account/#{username}/editprofile')
-                button.btn.btn-default(type='button') Edit
+                a.btn.btn-default(href='/account/#{username}/editprofile', role='button') Edit
           else if projects
+            //- location = 'project';
             h1 Projects
             p
               a(href='/project/post')
@@ -50,17 +65,19 @@ block content-main
                       div(id = 'project'+i, class = 'panel-collapse.in')
                         .panel-body
                           | #{project['description']}
-                          a(herf='#') Details
+                          p
+                            a(herf='#') Details
             else
               h4 You have no Project.
           else if following
+            //- location = 'following';
             h1 Following
             if following != 'No Results'
               for user2 in following
                 .col-md-4.column
                   .media
                     .media-left.media-left
-                      a(href='/account/'+user2['fuid2'])
+                      a(href='/account/'+user2['fuid2']+'/information')
                         img.media-object(src='...', alt='...')
                       .media-body
                         h4.media-heading #{user2['fuid2']}
@@ -68,13 +85,14 @@ block content-main
             else
               h4 You are not following anyone.
           else if follower
+            //- location = 'follower';
             h1 Followers
             if follower != 'No Results'
               for user1 in follower
                 .col-md-4.column
                   .media
                     .media-left.media-left
-                      a(href='/account/'+user1['fuid1'])
+                      a(href='/account/'+user1['fuid1']+'/information')
                         img.media-object(src='...', alt='...')
                       .media-body
                         h4.media-heading #{user1['fuid1']}
@@ -82,6 +100,7 @@ block content-main
             else
               h4 You have no follower.
           else if pledge
+            //- location = 'pledge';
             h1 Pledges
             if pledges != 'No Results'
               #panel-783993.panel-group
@@ -96,6 +115,7 @@ block content-main
             else
               h4 You have no pledges.
           else if comment
+            //- location = 'comment';
             h1 Comments
             if comment != 'No Results'
               #panel-783993.panel-group
@@ -111,6 +131,7 @@ block content-main
             else
               h4 You have no comment.
           else if like
+            //- location = 'like';
             h1 Likes
             if like != 'No Results'
               #panel-783993.panel-group
@@ -125,6 +146,7 @@ block content-main
             else
               h4 You have no like.
           else if rate
+            //- location = 'rate';
             h1 Rates
             if rate != 'No Results'
               #panel-783993.panel-group
@@ -140,7 +162,10 @@ block content-main
             else
               h4 You have no rate.
           else
+            //- location = 'information';
             h1 No elements
+        .col-md-4.column
+          h1 Recent Messages
 
 
                     
