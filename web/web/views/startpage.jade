@@ -166,6 +166,16 @@ block content-main
             h1 No elements
         .col-md-4.column
           h1 Recent Messages
+          - console.log(recent);
+          for recents in recent
+              li
+                a(href='#') #{recents['buid']}
+                if recents['behave'] == 'comment'
+                  | makes a comment on
+                else
+                  | #{recents['behave']}
+                a(href='#') #{recents['bpid']}
+                span #{recents['bdate']}
 
 
                     

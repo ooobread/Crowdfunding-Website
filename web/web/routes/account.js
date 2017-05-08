@@ -3,6 +3,14 @@ var router = express.Router();
 var db = require('./database.js');
 var url = require('url');
 
+router.use(function(req, res, next){
+	db.recent(req.session.user, function(results){
+		req.recent = results;
+		//console.log(req.recent);
+	});
+	next();
+});
+
 router.param('username', function(req, res, next, username) {
 	// 对name进行验证或其他处理……
 	//console.log('param: '+username);
@@ -18,7 +26,7 @@ router.param('location', function(req, res, next, location) {
 });
 
 router.get('/:username/information', function(req, res, next) {
-	//console.log('get: '+ req.username);
+	//console.log(req.recent);
 	//var username = req.session.username;
 	var user = {
 		guest: 'false',
@@ -44,16 +52,19 @@ router.get('/:username/information', function(req, res, next) {
  		//console.log(results);
  		if(results==''){
  			console.log('no');
- 			res.render('startpage', {location: 'information',
+ 			res.render('startpage', {recent: req.recent,
+ 									 location: 'information',
  									 user: user,
  									 username: req.username,
  									 myusername: req.session.user});
  		}
  		else{
  			console.log('yes');
+ 			//console.log(req.recent);
  			//console.log(results[0]);
  			//console.log(req.session);
- 			res.render('startpage', {location: 'information',
+ 			res.render('startpage', {recent: req.recent,
+ 									 location: 'information',
  				 					 user: user,
  									 information: results,
  									 username: req.username,
@@ -90,7 +101,8 @@ router.get('/:username/projects', function(req, res, next) {
  			console.log('no');
  		    var arr = [];
  			arr.push('No Results');
- 			res.render('startpage', {location: 'projects',
+ 			res.render('startpage', {recent: req.recent,
+ 									 location: 'projects',
  									 user: user,
  									 projects: arr,
  									 username: req.username,
@@ -100,7 +112,8 @@ router.get('/:username/projects', function(req, res, next) {
  			console.log('yes');
  			//console.log(results[0]);
  			//console.log(req.session);
- 			res.render('startpage', {location: 'projects',
+ 			res.render('startpage', {recent: req.recent,
+ 									 location: 'projects',
  									 user: user,
  									 projects: results,
  									 username: req.username,
@@ -137,7 +150,8 @@ router.get('/:username/following', function(req, res, next) {
  			console.log('no');
  			var arr = [];
  			arr.push('No Results');
- 			res.render('startpage', {location: 'following',
+ 			res.render('startpage', {recent: req.recent,
+ 									 location: 'following',
  									 user: user,
  									 following: arr,
  									 username: req.username,
@@ -147,7 +161,8 @@ router.get('/:username/following', function(req, res, next) {
  			console.log('yes');
  			//console.log(results[0]);
  			//console.log(req.session);
- 			res.render('startpage', {location: 'following',
+ 			res.render('startpage', {recent: req.recent,
+ 									 location: 'following',
  									 user: user,
  									 following: results,
  									 username: req.username,
@@ -184,7 +199,8 @@ router.get('/:username/follower', function(req, res, next) {
  			console.log('no');
  			var arr = [];
  			arr.push('No Results');
- 			res.render('startpage', {location: 'follower',
+ 			res.render('startpage', {recent: req.recent,
+ 									 location: 'follower',
  									 user: user,
  									 follower: arr,
  									 username: req.username,
@@ -194,7 +210,8 @@ router.get('/:username/follower', function(req, res, next) {
  			console.log('yes');
  			//console.log(results[0]);
  			//console.log(req.session);
- 			res.render('startpage', {location: 'follower',
+ 			res.render('startpage', {recent: req.recent,
+ 									 location: 'follower',
  									 user: user,
  									 follower: results,
  									 username: req.username,
@@ -231,7 +248,8 @@ router.get('/:username/pledges', function(req, res, next) {
  			console.log('no');
  			var arr = [];
  			arr.push('No Results');
- 			res.render('startpage', {location: 'pledges',
+ 			res.render('startpage', {recent: req.recent,
+ 									 location: 'pledges',
  									 user: user,
  									 pledge: arr,
  									 username: req.username,
@@ -241,7 +259,8 @@ router.get('/:username/pledges', function(req, res, next) {
  			console.log('yes');
  			//console.log(results[0]);
  			//console.log(req.session);
- 			res.render('startpage', {location: 'pledges',
+ 			res.render('startpage', {recent: req.recent,
+ 									 location: 'pledges',
  									 user: user,
  									 pledge: results,
  									 username: req.username,
@@ -278,7 +297,8 @@ router.get('/:username/comments', function(req, res, next) {
  			console.log('no');
  			var arr = [];
  			arr.push('No Results');
- 			res.render('startpage', {location: 'comments',
+ 			res.render('startpage', {recent: req.recent,
+ 									 location: 'comments',
  									 user: user,
  									 comment: arr,
  									 username: req.username,
@@ -289,7 +309,8 @@ router.get('/:username/comments', function(req, res, next) {
  			//console.log(results[0]);
  			//console.log(req.session);
  			console.log('comments: '+req.username);
- 			res.render('startpage', {location: 'comments',
+ 			res.render('startpage', {recent: req.recent,
+ 									 location: 'comments',
  									 user: user,
  									 comment: results,
  									 username: req.username,
@@ -326,7 +347,8 @@ router.get('/:username/likes', function(req, res, next) {
  			console.log('no');
  			var arr = [];
  			arr.push('No Results');
- 			res.render('startpage', {location: 'likes',
+ 			res.render('startpage', {recent: req.recent,
+ 									 location: 'likes',
  									 user: user,
  									 like: arr,
  									 username: req.username,
@@ -336,7 +358,8 @@ router.get('/:username/likes', function(req, res, next) {
  			console.log('yes');
  			//console.log(results[0]);
  			//console.log(req.session);
- 			res.render('startpage', {location: 'likes',
+ 			res.render('startpage', {recent: req.recent,
+ 									 location: 'likes',
  									 user: user,
  									 like: results,
  									 username: req.username,
@@ -373,7 +396,8 @@ router.get('/:username/rates', function(req, res, next) {
  			console.log('no');
  			var arr = [];
  			arr.push('No Results');
- 			res.render('startpage', {location: 'rates',
+ 			res.render('startpage', {recent: req.recent,
+ 									 location: 'rates',
  									 user: user,
  									 rate: arr,
  									 username: req.username,
@@ -383,7 +407,8 @@ router.get('/:username/rates', function(req, res, next) {
  			console.log('yes');
  			//console.log(results[0]);
  			//console.log(req.session);
- 			res.render('startpage', {location: 'rates',
+ 			res.render('startpage', {recent: req.recent,
+ 									 location: 'rates',
  									 user: user,
  									 rate: results,
  									 username: req.username,

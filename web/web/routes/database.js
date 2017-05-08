@@ -23,11 +23,21 @@ exports.query = function(sql, sqlparams, results){
 	});
 };
 
-exports.logbehavior = function(username, behavior, project, results){
-	var sql = 'insert into behavior (buid, behave, bpid, bdate) values (?, ?, ?, now())';
-	var sqlParams = [username, behavior, project];
-	query(sql, salParams, function (data){
-		results(data);
+exports.recent = function(username, results){
+	var sql = 'select * from project.behavior where buid in (select fuid2 from follow where fuid1=?) order by bdate desc limit 10';
+	var sqlParams = [username];
+	connection.query(sql, sqlParams, function (error, data) {
+		if (error){
+			throw error;
+			//connection.end();
+			//return;
+		}
+		else{
+			results(data);
+			//connection.end();
+			//return;
+		}
 	});
 };
+
 
