@@ -22,6 +22,30 @@ router.param('star', function(req, res, next, star) {
 	next();	
 });
 
+router.get('/postpage', function(req, res, next){
+	var sql = 'select tname from tag'
+	db.query(sql, function(req, results){
+		//console.log(results);
+		var arr = [];
+		for(var i = 0; i < results.length; i++){
+			console.log(results[i].tname);
+			arr.push('"'+results[i].tname+'"');
+		}
+		console.log(arr);
+		res.render('post', {tag: arr});
+	});
+});
+
+router.post('/createproject', function(req, res, next){
+	//console.log(req.body.InputProjectName);
+	var sql = 'insert into project (pname, description, max_fund, pstatus, post_date, pruid, tag) values (?, ?, ?, "pending", now(), ?, ?)';
+	var sqlparams = [req.body.InputProjectName, req.body.InputProjectDescription, req.body.InputGoal, req.session.user, req.body.InputTags];
+	db.query(sql, sqlparams, function(results){
+		//console.log(results);
+		res.redirect('/account/'+req.session.user+'/information');
+	});
+});
+
 router.get('/:pid/:myusername', function(req,res,next){
 	var sql = "select * from project left join user on uid  = pruid where pid = ? ";
 	var sqlParams = [req.pid];
@@ -60,7 +84,7 @@ router.get('/:pid/:myusername', function(req,res,next){
 	});
 	var sql25 = "select AVG(score) as rates from Rate group by rpid having rpid = "+req.pid;
   	db.query(sql25,function(req,results,next){
-  		if(results){
+  		if(results != ''){
   			info1.rate = results[0].rates;
   	    }
   		else 

@@ -4,21 +4,40 @@ block title
 block content-main
   .row.clearfix
     .col-md-12.column
-      form(role='form')
+      form(role='form', method='post', action='/project/createproject')
         .form-group
           label(for='InputProjectName') Project Name:
-          input#InputProjectName.form-control(type='text')
+          input#InputProjectName.form-control(type='text', name='InputProjectName')
         .form-group
           label(for='InputProjectDescription') Project Description:
-          textarea#InputProjectDescription.form-control(row='10')
+          textarea#InputProjectDescription.form-control(row='10', name='InputProjectDescription')
         .form-group
-          label(for='InputMinMax') Please type in minimal and maximal amount: 
-          p Min:
-          input#InputMinMax.form-control(type='text')
-          p Max:
-          input#InputMinMax.form-control(type='text')
+          label(for='InputGoal') Please type in the project's goal: 
+          p Goal:
+          input#InputGoal.form-control(type='text', name='InputGoal')
           p.help-block
             | in $
         .form-group
-          input#searchWords.form-control(type='text', name='searchWords', data-provide='typeahead', autocomplete='off', placeholder='Tag ...')
+          input.typeahead.form-control(type='text', placeholder='Search Tags', name='InputTags')
         button.btn.btn-default(type='submit') Submit
+        script(src='http://twitter.github.io/typeahead.js/releases/latest/typeahead.bundle.js')
+        script(type='text/javascript').
+          $(document).ready(function() {
+            var tag = new Bloodhound({
+              datumTokenizer: Bloodhound.tokenizers.whitespace,
+              queryTokenizer: Bloodhound.tokenizers.whitespace,
+              local: [!{tag}]
+              });
+
+            $('.typeahead').typeahead({
+            hint: true,
+            highlight: true,
+            minLength: 1
+            }, {
+            name: 'SearchTags',
+            source: tag
+            });
+          });
+
+
+      
