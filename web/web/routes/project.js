@@ -86,6 +86,21 @@ router.get('/:pid', function(req,res,next){
   			info1.rate = 'none';
   	}); 
 
+	var sql26 = "select * from Rate where rpid =" +req.pid +  " and ruid = " + uid;
+	//var sqlparam26 = [req.pid,uid];
+	//console.log(sqlparam26);
+  	db.query(sql26,function(req,results,next){
+  		
+  		if(results != ''){
+
+  			info1.score = results[0].score;
+  			info1.has_rate = 'true';
+  	    }
+  		else 
+  			info1.has_rate = 'false';
+  	}); 
+  	
+  	
 	var sql3 = "select * from likes where luid = " + uid + " and lpid = " + req.pid;
 	db.query(sql3, function(req,results){
 		var is_like;
@@ -102,6 +117,8 @@ router.get('/:pid', function(req,res,next){
 			myusername: uid,
 			rate:info1.rate,
 			des : info1.des,
+			score:info1.score,
+			has_rate:info1.has_rate,
 			Pname:info1.Pname,
 			current_amount :info1.current_amount,
 			max_fund :info1.max_fund,
@@ -189,15 +206,16 @@ router.get('/close/:pid', function(req,res,next){
 });
 
 router.get('/rate/:pid/:star', function(req,res){
+	var pid = [req.pid];
 	var sql = "INSERT INTO rate values(?,?,?)";
 	var sqlparams = [req.pid];
 	var uid = [req.session.user];
 	var star = [req.star];
     sqlparams = uid.concat(sqlparams);
     sqlparams = sqlparams.concat(star);
-	db.query(sql,sqlparams,function(req,res,next){
-		
+	db.query(sql,sqlparams,function(req,results){
 	});
+	res.redirect('/project/' + pid);
 	
 });
 
