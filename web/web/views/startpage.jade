@@ -62,7 +62,7 @@ block content-main
                     .card-block
                     h4.card-title #{project['pname']}
                     p.card-text #{project['description']}
-                    a.btn.btn-primary(href='/project/' + project['pid'] + '/' + myusername) View
+                    a.btn.btn-primary(href='/project/' + project['pid']) View
             else
               h4 You have no Project.
           else if following
@@ -74,7 +74,7 @@ block content-main
                   .media
                     .media-left.media-left
                       a(href='/account/'+user2['fuid2']+'/information')
-                        img.media-object(src='...', alt='...')
+                        img.media-object(src='uploads/', alt='...')
                       .media-body
                         h4.media-heading #{user2['fuid2']}
             else
@@ -105,7 +105,7 @@ block content-main
                       p.card-text #{pledges['description']}
                       p.card-text Amount: $ #{pledges['amount']}
                       p.card-text #{pledges['date']}
-                      a.btn.btn-primary(href='/project/' + pledges['pid'] + '/' + myusername) View
+                      a.btn.btn-primary(href='/project/' + pledges['pid']) View
             else
               h4 You have no pledges.
           else if comment
@@ -132,7 +132,7 @@ block content-main
                     .card-block
                     h4.card-title #{likes['pname']}
                     p.card-text #{likes['description']}
-                    a.btn.btn-primary(href='/project/' + likes['pid'] + '/' + myusername) View
+                    a.btn.btn-primary(href='/project/' + likes['pid']) View
             else
               h4 You have no like.
           else if rate
@@ -146,7 +146,7 @@ block content-main
                     h4.card-title #{rates['pname']}
                     p.card-text #{rates['description']}
                     p.card-text Score: #{rates['score']}
-                    a.btn.btn-primary(href='/project/' + rates['pid'] + '/' + myusername) View
+                    a.btn.btn-primary(href='/project/' + rates['pid']) View
             else
               h4 You have no rate.
           else

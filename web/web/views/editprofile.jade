@@ -23,10 +23,13 @@ block content-front
 						.form-group
 							label(for='inputCredit') Credit Card: 
 							input#InputCredit.form-control(type='text', name='inputCredit', value='#{credit}')
-						.form-group
-							label(for='InputFile') File input
-							input#InputFile(type='file', name='InputFile')
-							p.help-block Example block-level help text here.
+				.row.clearfix
+					.col-md-12.column
+						form(role='form', method='post', action='/account/#{username}/uploadfile', enctype='multipart/form-data')
+							.form-group
+								label(for='InputFile') File input
+								input#InputFile(type='file', name='InputFile')
+							button.btn.btn-default(type='submit') Upload
 						button.btn.btn-default(type='submit') Submit
 						if error
 							.alert.alert-dismissable.alert-warning

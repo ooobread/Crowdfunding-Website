@@ -4,15 +4,17 @@ var db = require('./database.js');
 var url = require('url');
 var fs = require('fs');
 var multer = require('multer');
-var upload = multer({ dest: 'uploads/' });
+
 
 router.use(function(req, res, next){
+	//console.log(req.files);
 	db.recent(req.session.user, function(results){
 		req.recent = results;
 		//console.log(req.recent);
 	});
 	next();
 });
+
 
 router.param('username', function(req, res, next, username) {
 	// 对name进行验证或其他处理……
@@ -26,6 +28,16 @@ router.param('location', function(req, res, next, location) {
 	//console.log('param: '+username);
 	req.location = location;
 	next();	
+});
+
+router.post('/:username/uploadfile', function(req, res, next) {
+	//console.log(req.files.InputFile.type);
+	var upload = multer({ dest: 'uploads/'});
+	upload.single('InputFile', function(req, res){
+		console.log(req.file);
+		res.redirect('/account/'+req.username+'/editprofile');
+	});
+	
 });
 
 router.get('/:username/information', function(req, res, next) {
@@ -242,7 +254,7 @@ router.get('/:username/pledges', function(req, res, next) {
 	if(req.username != req.session.user){
 		user.guest = 'true';
 	}
-	sql = 'select project.pname, project.description, donate.amount, donate.date from project, donate where project.pid = donate.dpid and donate.duid = ?' ;
+	sql = 'select project.pid, project.pname, project.description, donate.amount, donate.date from project, donate where project.pid = donate.dpid and donate.duid = ?' ;
  	sqlParams = [req.username];
  	//console.log(sqlParams);
  	db.query(sql, sqlParams, function(results){
@@ -291,7 +303,7 @@ router.get('/:username/comments', function(req, res, next) {
 	if(req.username != req.session.user){
 		user.guest = 'true';
 	}
-	sql = 'select project.pname, comment.comments, comment.date from project, comment where project.pid = comment.cpid and comment.cuid = ?' ;
+	sql = 'select project.pid, project.pname, comment.comments, comment.date from project, comment where project.pid = comment.cpid and comment.cuid = ?' ;
  	sqlParams = [req.username];
  	//console.log(sqlParams);
  	db.query(sql, sqlParams, function(results){
@@ -341,7 +353,7 @@ router.get('/:username/likes', function(req, res, next) {
 	if(req.username != req.session.user){
 		user.guest = 'true';
 	}
-	sql = 'select project.pname, project.description from project, likes where project.pid = likes.lpid and likes.luid = ?' ;
+	sql = 'select project.pid, project.pname, project.description from project, likes where project.pid = likes.lpid and likes.luid = ?' ;
  	sqlParams = [req.username];
  	//console.log(sqlParams);
  	db.query(sql, sqlParams, function(results){
@@ -390,7 +402,7 @@ router.get('/:username/rates', function(req, res, next) {
 	if(req.username != req.session.user){
 		user.guest = 'true';
 	}
-	sql = 'select project.pname, project.description, rate.score from project, rate where project.pid = rate.rpid and rate.ruid = ?' ;
+	sql = 'select project.pid, project.pname, project.description, rate.score from project, rate where project.pid = rate.rpid and rate.ruid = ?' ;
  	sqlParams = [req.username];
  	//console.log(sqlParams);
  	db.query(sql, sqlParams, function(results){
@@ -461,8 +473,8 @@ router.get('/:username/editprofile', function(req, res, next) {
 	
 });
 
-router.post('/:username/updateprofile', upload.single('InputFile'), function(req, res, next) {
-	//console.log(req.username);
+router.post('/:username/updateprofile', function(req, res, next) {
+	//console.log(req.files.InputFile.type);
 	var sql = 'select pwd, name, hometown, interest, credit_card from user where uid = ?' ;
  	var sqlParams = [req.username];
  	var password;
