@@ -3,34 +3,30 @@ block title
    title Project_main
 block content-main
   body
-    // header
-    header.header
-      .container
-        .row
-          .col-md-12.span4
-            h3 #{current_amount} raised out of #{max_fund}
- 
-         
-    // /header
     // main content
     .main-content
       .container
         .row
-          .content.col-md-12.col-sm-12.col-xs-12
+          .content.col-md-12
             .section-block
-              .funding-meta
-          
-                  h1 #{Pname}
-                  span.type-meta
-                    i.fa.fa-user
-                    |  user name
-                  span.type-meta
-                  i.fa.fa-tag
-                  a(href='#') crowdfunding
-                  | , 
-                  a(href='#') launch
-
-              a.btn.btn-launch(href='#') HELP LAUNCH
+              .funding-meta     
+                 h1 #{Pname} 
+                   span.label.label-default   #{pstatus}    
+                   span.label.label-success   #{rate}/5
+                  .col-md-12
+                    img.img-rounded(src='https://assets.entrepreneur.com/content/3x2/1300/20161114224458-shutterstock-212710381.jpeg', alt='Cinque Terre', width='900', height='400')
+                  if is_like == '0' 
+                    a.btn.btn-default(href='/project/like/' + pid , role='button') Like
+                  else
+                    a.btn.btn-default(href='/project/dislike/' + pid , role='button') Liked
+                  if (user ==uid & pstatus == 'ongoing')
+                     a.btn.btn-default(href='/project/close/' + pid , role='button') Close Project
+                  h2 Donation progress ($#{current_amount} of total $#{max_fund})
+                  .progress
+                    .progress-bar(role='progressbar', aria-valuemin='0', aria-valuemax=100, style = 'width:#{donate_percent}')| #{donate_percent}
+                 
+               
+              
             // tabs
             .section-block
               .section-tabs
@@ -41,6 +37,9 @@ block content-main
                     a(href='#updates', aria-controls='updates', role='tab', data-toggle='tab') Updates
                   li(role='presentation')
                     a(href='#comments', aria-controls='comments', role='tab', data-toggle='tab') Comments
+                  if pstatus == 'completed'
+                    li(role='presentation')
+                      a(href='#rate', aria-controls='rate', role='tab', data-toggle='tab') Rate
             // /tabs
             // tab panes
             .section-block
@@ -58,12 +57,8 @@ block content-main
                       h4.update-title We've started shipping!
                       span.update-date Posted 2 days ago
                       p Suspendisse luctus at massa sit amet bibendum. Cras commodo congue urna, vel dictum velit bibendum eget. Vestibulum quis risus euismod, facilisis lorem nec, dapibus leo. Quisque sodales eget dolor iaculis dapibus. Vivamus sit amet lacus ipsum. Nullam varius lobortis neque, et efficitur lacus. Quisque dictum tellus nec mi luctus imperdiet. Morbi vel aliquet velit, accumsan dapibus urna. Cras ligula orci, suscipit id eros non, rhoncus efficitur nisi.
-                    
-                    // /update items
-        
-                
+                      
                  #comments.tab-pane(role='tabpanel')
-                    
                    .comment-information             
                      h1.section-title COMMENTS
                      for infor in info
@@ -75,13 +70,31 @@ block content-main
                        textarea(class="form-control", rows='3', name='comment', form='usrform')
                        button.btn.btn-success(type='submit') Submit
                        br
-                       br
+                 if pstatus == 'completed'
+                 #rate.tab-pane(role='tabpanel')
+                   .rate-information
+                     .col-md-5
+                       h2 Please rate the project:
+                     .col-md-7
+                       nav(aria-label='Page navigation')
+                         ul.pagination.pagination-lg
+                           li
+                             a(href='/project/rate/' + pid + '/' + uid + '/1') 1
+                           li
+                             a(href='/project/rate/' + pid + '/' + uid+ '/2') 2
+                           li
+                             a(href='/project/rate/' + pid + '/' + uid+ '/3') 3
+                           li      
+                             a(href='/project/rate/' + pid + '/' + uid+ '/4') 4
+                           li
+                             a(href='/project/rate/' + pid + '/' + uid+ '/5') 5
+                     
+                     
+                     
+                      
+                     
+
+                     
                     
-          
-    footer.footer
-      .container
-    // Global jQuery
-    script(type='text/javascript', src='assets/js/jquery-1.12.3.min.js')
-    script(type='text/javascript', src='assets/js/bootstrap.min.js')
-    // Template JS
-    script(type='text/javascript', src='assets/js/main.js')
+
+  
