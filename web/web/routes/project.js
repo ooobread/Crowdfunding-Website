@@ -9,13 +9,20 @@ router.param('pid', function(req, res, next, pid) {
 	next();	
 });
 
+router.param('myusername', function(req, res, next, myusername) {
+
+	req.myusername = myusername;
+	next();	
+});
+
+
 router.param('star', function(req, res, next, star) {
 
 	req.star = star;
 	next();	
 });
 
-router.get('/:pid', function(req,res,next){
+router.get('/:pid/:myusername', function(req,res,next){
 	var sql = "select * from project left join user on uid  = pruid where pid = ? ";
 	var sqlParams = [req.pid];
 	var uid = req.session.user;
@@ -59,7 +66,7 @@ router.get('/:pid', function(req,res,next){
   		else 
   			info1.rate = 'none';
   	}); 
-
+  	var myusername = req.myusername;
 	var sql3 = "select * from likes where luid = " + uid + " and lpid = " + req.pid;
 	db.query(sql3, function(req,results){
 		var is_like;
@@ -69,9 +76,11 @@ router.get('/:pid', function(req,res,next){
 		else{
 			is_like = '0';
 			}
+		
 		res.render('project_main',{info : arr,
 			user :uid,
 			uid: info1.uid,
+			myusername: myusername,
 			rate:info1.rate,
 			des : info1.des,
 			Pname:info1.Pname,
@@ -96,7 +105,7 @@ router.get('/:pid/comment', function(req,res,next){
 	});
 });
 
-router.post('/result', function(req, res, next) {
+router.post('/result/:myusername', function(req, res, next) {
 	var searchtext = [req.body.searchtext];
 	var searchselect = req.body.searchselect;
 	if (searchselect == 'name'){
@@ -118,7 +127,8 @@ router.post('/result', function(req, res, next) {
 	  	}
 	  	else{
 	      console.log('Success!');
-	      res.render('search',{rows,rows});
+	      res.render('search',{rows:rows,
+	    	     myusername: req.myusername});
 	      
 	 	}
 		
