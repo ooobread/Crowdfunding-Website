@@ -15,7 +15,7 @@ block content-main
                    span.label.label-success   #{rate}/5
                   .col-md-12
                     img.img-rounded(src='https://assets.entrepreneur.com/content/3x2/1300/20161114224458-shutterstock-212710381.jpeg', alt='Cinque Terre', width='900', height='400')
-                  a.btn.btn-default(href='/pledge/' + pid , role='button') Help Funding
+                  a.btn.btn-default(href='/pledge/' + pid + '/' + myusername, role='button') Help Funding
                   if is_like == '0' 
                     a.btn.btn-default(href='/project/like', role='button') Like
                   else
