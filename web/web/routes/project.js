@@ -42,12 +42,16 @@ router.post('/createproject', function(req, res, next){
 });
 
 router.get('/:pid', function(req,res,next){
+	var sql = 'insert into log_project values(?,?,now())';
+	var sqlparams = [req.session.user, req.pid];
+	db.query(sql, sqlparams, function(results){
+
+	});
 	var sql = "select * from project left join user on uid  = pruid where pid = ? ";
 	var sqlParams = [req.pid];
 	var uid = req.session.user;
 	var arr = [];
 	var info1 = {};
-	
 	db.query(sql, sqlParams, function(results,next){
 			
 			
