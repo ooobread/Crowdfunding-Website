@@ -11,8 +11,9 @@ block content-main
             .section-block
               .funding-meta     
                  h1 #{Pname} 
-                   span.label.label-default   #{pstatus}    
-                   span.label.label-success   #{rate}/5
+                   span.label.label-default   #{pstatus}  
+                   if pstatus == 'completed'  
+                     span.label.label-success   #{rate}/5
                   .col-md-12
                     img.img-rounded(src='https://assets.entrepreneur.com/content/3x2/1300/20161114224458-shutterstock-212710381.jpeg', alt='Cinque Terre', width='900', height='400')
                   a.btn.btn-default(href='/pledge/' + pid , role='button') Help Funding
@@ -74,9 +75,10 @@ block content-main
                        textarea(class="form-control", rows='3', name='comment', form='usrform')
                        button.btn.btn-success(type='submit') Submit
                        br
-                 if pstatus == 'completed'
+                 
                  #rate.tab-pane(role='tabpanel')
                    .rate-information
+                   if ( has_rate == 'false')
                      .col-md-5
                        h2 Please rate the project:
                      .col-md-7
@@ -92,7 +94,8 @@ block content-main
                              a(href='/project/rate/' + pid + '/4') 4
                            li
                              a(href='/project/rate/' + pid + '/5') 5
-                     
+                 
+                   h1 Your rating is #{score}
                      
                      
                       
