@@ -5,6 +5,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var bodyParser = require('body-parser');
+var url = require('url');
+//var flash = require('connect-flash');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -34,6 +36,17 @@ app.use('/static_views', express.static(path.join(__dirname, 'static_views')));
 
 app.use('/', index);
 app.use('/users', users);
+app.use(function(req, res, next){
+	console.log(req.session.user);
+	if(req.session.user){
+		next();
+	}
+	else{
+		req.session.originalUrl = req.originalUrl ? req.originalUrl : null;
+		//req.flash('error', 'log in first.');
+		res.redirect('/');
+	}
+});
 app.use('/account', account);
 app.use('/project', project);
 
