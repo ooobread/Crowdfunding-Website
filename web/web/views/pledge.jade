@@ -8,7 +8,7 @@ block content-main
          img.img-rounded(src='https://assets.entrepreneur.com/content/3x2/1300/20161114224458-shutterstock-212710381.jpeg', alt='Cinque Terre', width='900', height='400')
       h1 ABOUT LAUNCH
         p #{des}
-      form.form-signin(method='POST', action='/pledge/' +pid +'/check/' + myusername)
+      form.form-signin(method='POST', action='/pledge/' +pid +'/check')
         h2.form-signin-heading Please Enter the amount:
         label.sr-only(for='$') $
         input#amount.form-control(type='text', name='amount', placeholder='$', required='', autofocus='')
