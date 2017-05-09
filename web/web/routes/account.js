@@ -2,6 +2,9 @@ var express = require('express');
 var router = express.Router();
 var db = require('./database.js');
 var url = require('url');
+var fs = require('fs');
+var multer = require('multer');
+var upload = multer({ dest: 'uploads/' });
 
 router.use(function(req, res, next){
 	db.recent(req.session.user, function(results){
@@ -239,11 +242,11 @@ router.get('/:username/pledges', function(req, res, next) {
 	if(req.username != req.session.user){
 		user.guest = 'true';
 	}
-	sql = 'select project.pname, project.description from project, donate where project.pid = donate.dpid and donate.duid = ?' ;
+	sql = 'select project.pname, project.description, donate.amount, donate.date from project, donate where project.pid = donate.dpid and donate.duid = ?' ;
  	sqlParams = [req.username];
  	//console.log(sqlParams);
  	db.query(sql, sqlParams, function(results){
- 		//console.log(results);
+ 		console.log(results);
  		if(results==''){
  			console.log('no');
  			var arr = [];
@@ -458,7 +461,7 @@ router.get('/:username/editprofile', function(req, res, next) {
 	
 });
 
-router.post('/:username/updateprofile', function(req, res, next) {
+router.post('/:username/updateprofile', upload.single('InputFile'), function(req, res, next) {
 	//console.log(req.username);
 	var sql = 'select pwd, name, hometown, interest, credit_card from user where uid = ?' ;
  	var sqlParams = [req.username];
@@ -507,7 +510,7 @@ router.post('/:username/updateprofile', function(req, res, next) {
  		}
  		else{
  			console.log('update:yes');
- 			res.redirect('/account/'+req.session.user);
+ 			res.redirect('/account/'+req.session.user+'/information');
  		}
  	});
 

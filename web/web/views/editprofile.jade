@@ -23,6 +23,10 @@ block content-front
 						.form-group
 							label(for='inputCredit') Credit Card: 
 							input#InputCredit.form-control(type='text', name='inputCredit', value='#{credit}')
+						.form-group
+							label(for='InputFile') File input
+							input#InputFile(type='file', name='InputFile')
+							p.help-block Example block-level help text here.
 						button.btn.btn-default(type='submit') Submit
 						if error
 							.alert.alert-dismissable.alert-warning

@@ -56,17 +56,13 @@ block content-main
               a(href='/project/postpage')
                 button.btn.btn-default(type='button') Post a New Project
             if projects != 'No Results'
-              #panel-783993.panel-group
-                #display-panel
-                  for project,i in projects
-                    .panel.panel-default
-                      .panel-heading
-                        a.panel-title(data-toggle='collapse', data-parent='#panel-783993', href='#project'+i) #{project['pname']}
-                      div(id = 'project'+i, class = 'panel-collapse.in')
-                        .panel-body
-                          | #{project['description']}
-                          p
-                            a(herf='#') Details
+                for project,i in projects
+                  .col-md-4.column
+                    img.card-img-top(src='https://assets.entrepreneur.com/content/3x2/1300/20161114224458-shutterstock-212710381.jpeg',width='150', height='150', alt='Card image cap')
+                    .card-block
+                    h4.card-title #{project['pname']}
+                    p.card-text #{project['description']}
+                    a.btn.btn-primary(href='/project/' + project['pid'] + '/' + myusername) View
             else
               h4 You have no Project.
           else if following
@@ -81,7 +77,6 @@ block content-main
                         img.media-object(src='...', alt='...')
                       .media-body
                         h4.media-heading #{user2['fuid2']}
-                        |     ...
             else
               h4 You are not following anyone.
           else if follower
@@ -96,69 +91,62 @@ block content-main
                         img.media-object(src='...', alt='...')
                       .media-body
                         h4.media-heading #{user1['fuid1']}
-                        |     ...
             else
               h4 You have no follower.
           else if pledge
             //- location = 'pledge';
             h1 Pledges
             if pledges != 'No Results'
-              #panel-783993.panel-group
-                #display-panel
                   for pledges,i in pledge
-                    .panel.panel-default
-                      .panel-heading
-                        a.panel-title(data-toggle='collapse', data-parent='#panel-783993', href='#pledges'+i) #{pledges['pname']}
-                      div(id = 'pledges'+i, class = 'panel-collapse.in')
-                        .panel-body
-                          | #{pledges['description']}
+                    .col-md-4.column
+                      img.card-img-top(src='https://assets.entrepreneur.com/content/3x2/1300/20161114224458-shutterstock-212710381.jpeg',width='150', height='150', alt='Card image cap')
+                      .card-block
+                      h4.card-title #{pledges['pname']}
+                      p.card-text #{pledges['description']}
+                      p.card-text Amount: $ #{pledges['amount']}
+                      p.card-text #{pledges['date']}
+                      a.btn.btn-primary(href='/project/' + pledges['pid'] + '/' + myusername) View
             else
               h4 You have no pledges.
           else if comment
             //- location = 'comment';
             h1 Comments
             if comment != 'No Results'
-              #panel-783993.panel-group
-                #display-panel
-                  for comments,i in comment
-                    .panel.panel-default
-                      .panel-heading
-                        a.panel-title(data-toggle='collapse', data-parent='#panel-783993', href='#comment'+i) #{comments['date']}
-                      div(id = 'comment'+i, class = 'panel-collapse.in')
-                        .panel-body
-                          h4 #{comments['pname']}
-                          | #{comments['comments']}
+              for comments,i in comment
+                li
+                  | Make comment on 
+                  a(href='#') #{comments['pname']}
+                  br
+                  | content: #{comments['comments']}
+                  br
+                  p #{comments['date']}
             else
               h4 You have no comment.
           else if like
             //- location = 'like';
             h1 Likes
             if like != 'No Results'
-              #panel-783993.panel-group
-                #display-panel
-                  for likes,i in like
-                    .panel.panel-default
-                      .panel-heading
-                        a.panel-title(data-toggle='collapse', data-parent='#panel-783993', href='#like'+i) #{likes['pname']}
-                      div(id = 'like'+i, class = 'panel-collapse.in')
-                        .panel-body
-                          | #{likes['description']}
+                for likes,i in like
+                  .col-md-4.column
+                    img.card-img-top(src='https://assets.entrepreneur.com/content/3x2/1300/20161114224458-shutterstock-212710381.jpeg',width='150', height='150', alt='Card image cap')
+                    .card-block
+                    h4.card-title #{likes['pname']}
+                    p.card-text #{likes['description']}
+                    a.btn.btn-primary(href='/project/' + likes['pid'] + '/' + myusername) View
             else
               h4 You have no like.
           else if rate
             //- location = 'rate';
             h1 Rates
             if rate != 'No Results'
-              #panel-783993.panel-group
-                #display-panel
-                  for rates,i in rate
-                    .panel.panel-default
-                      .panel-heading
-                        a.panel-title(data-toggle='collapse', data-parent='#panel-783993', href='#rates'+i) #{rates['pname']}
-                      div(id = 'rates'+i, class = 'panel-collapse.in')
-                        .panel-body
-                          h4 #{rates['description']}
-                          h4 #{rates['score']}
+                for rates,i in rate
+                  .col-md-4.column
+                    img.card-img-top(src='https://assets.entrepreneur.com/content/3x2/1300/20161114224458-shutterstock-212710381.jpeg',width='150', height='150', alt='Card image cap')
+                    .card-block
+                    h4.card-title #{rates['pname']}
+                    p.card-text #{rates['description']}
+                    p.card-text Score: #{rates['score']}
+                    a.btn.btn-primary(href='/project/' + rates['pid'] + '/' + myusername) View
             else
               h4 You have no rate.
           else
