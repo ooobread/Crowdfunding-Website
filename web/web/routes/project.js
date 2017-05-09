@@ -42,16 +42,12 @@ router.post('/createproject', function(req, res, next){
 });
 
 router.get('/:pid', function(req,res,next){
-	var sql = 'insert into log_project values(?,?,now())';
-	var sqlparams = [req.session.user, req.pid];
-	db.query(sql, sqlparams, function(results){
-
-	});
 	var sql = "select * from project left join user on uid  = pruid where pid = ? ";
 	var sqlParams = [req.pid];
 	var uid = req.session.user;
 	var arr = [];
 	var info1 = {};
+	
 	db.query(sql, sqlParams, function(results,next){
 			
 			
@@ -108,7 +104,7 @@ router.get('/:pid', function(req,res,next){
 	var sql3 = "select * from likes where luid = " + uid + " and lpid = " + req.pid;
 	db.query(sql3, function(req,results){
 		var is_like;
-		if (results == ""){
+		if (results != ""){
 			is_like = '1';
 		}
 		else{
@@ -179,7 +175,7 @@ router.post('/result/:pid', function(req, res, next) {
 		
 	  });
 });
-router.get('/like',function(req,res,next){
+router.get('/like/:pid',function(req,res,next){
 	var uid = [req.session.user];
 	var pid = [req.pid];
 	var sqlparams = uid.concat(pid);
@@ -190,7 +186,7 @@ router.get('/like',function(req,res,next){
 	res.redirect('/project/' + pid);
 });
 
-router.get('/dislike',function(req,res,next){
+router.get('/dislike/:pid',function(req,res,next){
 	var uid = [req.session.user];
 	var pid = [req.pid];
 	var sqlparams = uid.concat(pid);

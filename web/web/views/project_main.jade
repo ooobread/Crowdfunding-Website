@@ -18,9 +18,9 @@ block content-main
                     img.img-rounded(src='https://assets.entrepreneur.com/content/3x2/1300/20161114224458-shutterstock-212710381.jpeg', alt='Cinque Terre', width='900', height='400')
                   a.btn.btn-default(href='/pledge/' + pid , role='button') Help Funding
                   if is_like == '0' 
-                    a.btn.btn-default(href='/project/like', role='button') Like
+                    a.btn.btn-default(href='/project/like/' + pid, role='button') Like
                   else
-                    a.btn.btn-default(href='/project/dislike', role='button') Liked
+                    a.btn.btn-default(href='/project/dislike/ ' + pid, role='button') Liked
                   if (user ==uid & pstatus == 'ongoing')
                      a.btn.btn-default(href='/project/close/' + pid , role='button') Close Project
                   h2 Donation progress ($#{current_amount} of total $#{max_fund})
