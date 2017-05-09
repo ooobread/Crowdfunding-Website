@@ -132,6 +132,11 @@ router.get('/:pid/comment', function(req,res,next){
 router.post('/result/:myusername', function(req, res, next) {
 	var searchtext = [req.body.searchtext];
 	var searchselect = req.body.searchselect;
+	var sql = 'insert into log_search values(?,?,now())';
+	var sqlparams = [req.session.user, searchtext];
+	db.query(sql, sqlparams, function(results){
+
+	});
 	if (searchselect == 'name'){
 		var sql = "select Pname,description,pid from project where Pname like '%" + searchtext + "%'";
 	}
