@@ -15,10 +15,11 @@ block content-main
                    span.label.label-success   #{rate}/5
                   .col-md-12
                     img.img-rounded(src='https://assets.entrepreneur.com/content/3x2/1300/20161114224458-shutterstock-212710381.jpeg', alt='Cinque Terre', width='900', height='400')
+                  a.btn.btn-default(href='/pledge/' + pid , role='button') Help Funding
                   if is_like == '0' 
-                    a.btn.btn-default(href='/project/like/' + pid , role='button') Like
+                    a.btn.btn-default(href='/project/like', role='button') Like
                   else
-                    a.btn.btn-default(href='/project/dislike/' + pid , role='button') Liked
+                    a.btn.btn-default(href='/project/dislike', role='button') Liked
                   if (user ==uid & pstatus == 'ongoing')
                      a.btn.btn-default(href='/project/close/' + pid , role='button') Close Project
                   h2 Donation progress ($#{current_amount} of total $#{max_fund})
@@ -57,6 +58,9 @@ block content-main
                       h4.update-title We've started shipping!
                       span.update-date Posted 2 days ago
                       p Suspendisse luctus at massa sit amet bibendum. Cras commodo congue urna, vel dictum velit bibendum eget. Vestibulum quis risus euismod, facilisis lorem nec, dapibus leo. Quisque sodales eget dolor iaculis dapibus. Vivamus sit amet lacus ipsum. Nullam varius lobortis neque, et efficitur lacus. Quisque dictum tellus nec mi luctus imperdiet. Morbi vel aliquet velit, accumsan dapibus urna. Cras ligula orci, suscipit id eros non, rhoncus efficitur nisi.
+                      h2 16:9 Responsive Aspect Ratio
+                      .embed-responsive.embed-responsive-16by9
+                      iframe.embed-responsive-item(src='//www.youtube.com/embed/ePbKGoIGAXY')
                       
                  #comments.tab-pane(role='tabpanel')
                    .comment-information             
@@ -79,15 +83,15 @@ block content-main
                        nav(aria-label='Page navigation')
                          ul.pagination.pagination-lg
                            li
-                             a(href='/project/rate/' + pid + '/' + uid + '/1') 1
+                             a(href='/project/rate/' + pid + '/1') 1
                            li
-                             a(href='/project/rate/' + pid + '/' + uid+ '/2') 2
+                             a(href='/project/rate/' + pid + '/2') 2
                            li
-                             a(href='/project/rate/' + pid + '/' + uid+ '/3') 3
+                             a(href='/project/rate/' + pid + '/3') 3
                            li      
-                             a(href='/project/rate/' + pid + '/' + uid+ '/4') 4
+                             a(href='/project/rate/' + pid + '/4') 4
                            li
-                             a(href='/project/rate/' + pid + '/' + uid+ '/5') 5
+                             a(href='/project/rate/' + pid + '/5') 5
                      
                      
                      
