@@ -16,7 +16,7 @@ block content-front
               ul.nav.navbar-nav
                 li.active
                   a(href='#') Index
-              form.navbar-form.navbar-left(role='search', method='post', action='/project/result')
+              form.navbar-form.navbar-left(role='search', method='post', action='/project/result/'+myusername)
                 select.selectpicker(data-width='fit', name='searchselect')
                   option(value='name') By Project Name
                   option(value='tag') By Project Tag
