@@ -9,13 +9,7 @@ router.param('pid', function(req, res, next, pid) {
   next();	
 });
 
-router.param('myusername', function(req, res, next, myusername) {
-
-	req.myusername = myusername;
-	next();	
-});
-
-router.get('/:pid/:myusername',function(req,res,next){
+router.get('/:pid',function(req,res,next){
 
   var uid = req.session.user;
   
@@ -67,7 +61,7 @@ router.get('/:pid/:myusername',function(req,res,next){
 			user :uid,
 			uid: info1.uid,
 			rate:info1.rate,
-			myusername: myusername,
+			myusername: uid,
 			des : info1.des,
 			Pname:info1.Pname,
 			current_amount :info1.current_amount,
@@ -78,8 +72,8 @@ router.get('/:pid/:myusername',function(req,res,next){
 	 });
 });
 
-router.post('/:pid/check/:myusername', function(req,res,next){
-    var myusername = req.myusername;
+router.post('/:pid/check', function(req,res,next){
+  
     var amount= req.body.amount;
     if(amount > 0){
 		sql = 'INSERT INTO DONATE VALUES(?,?,?,now(),null)';
@@ -90,7 +84,7 @@ router.post('/:pid/check/:myusername', function(req,res,next){
 		sql = 'UPDATE project set current_amount = current_amount + ? where pid = ?';
 		sqlparams = [amount,req.pid];
 		db.query(sql,sqlparams,function(results){});
-		res.redirect('/project/' + req.pid + '/' + myusername);
+		res.redirect('/project/' + req.pid );
 	}
 	});
 
