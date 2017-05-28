@@ -25,7 +25,7 @@ block content-front
 							input#InputCredit.form-control(type='text', name='inputCredit', value='#{credit}')
 				.row.clearfix
 					.col-md-12.column
-						form(role='form', method='post', action='/account/#{username}/uploadfile', enctype='multipart/form-data')
+						form(role='form', method='post', action='/account/#{username}/upload', enctype='multipart/form-data')
 							.form-group
 								label(for='InputFile') File input
 								input#InputFile(type='file', name='InputFile')

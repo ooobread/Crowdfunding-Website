@@ -3,19 +3,20 @@ var router = express.Router();
 var db = require('./database.js');
 var url = require('url');
 
+
+
 router.param('pid', function(req, res, next, pid) {
 
 	req.pid = pid;
 	next();	
 });
 
-
-
 router.param('star', function(req, res, next, star) {
 
 	req.star = star;
 	next();	
 });
+
 
 router.get('/postpage', function(req, res, next){
 	var sql = 'select tname from tag'

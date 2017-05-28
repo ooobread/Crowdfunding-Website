@@ -6,7 +6,13 @@ var path    = require('path');
 router.get('/', function(req, res, next) {
 	//console.log('index');
 	//console.log(req.session.user);
-	res.render('login');
+	if(req.session.user){
+		res.redirect('/account/'+req.session.user+'/information');
+	}
+	else{
+		res.render('login');
+	}
+	
 	//res.sendFile(path.join(__dirname, '../static_views/Login.html'));
 });
 

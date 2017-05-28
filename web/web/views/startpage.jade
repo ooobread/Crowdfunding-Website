@@ -157,12 +157,12 @@ block content-main
           - console.log(recent);
           for recents in recent
               li
-                a(href='#') #{recents['buid']}
+                a(href='/account/'+recents['buid']+'/information') #{recents['buid']}
                 if recents['behave'] == 'comment'
                   | makes a comment on
                 else
                   | #{recents['behave']}
-                a(href='#') #{recents['bpid']}
+                a(href='/project/'+recents['bpid']) #{recents['bpid']}
                 span #{recents['bdate']}
 
 

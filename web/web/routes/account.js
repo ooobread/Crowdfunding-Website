@@ -4,7 +4,16 @@ var db = require('./database.js');
 var url = require('url');
 var fs = require('fs');
 var multer = require('multer');
-
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, '../web/public/images');    // 保存的路径，备注：需要自己创建
+    },
+    filename: function (req, file, cb) {
+        // 将保存文件名设置为 字段名 + 时间戳，比如 logo-1478521468943
+        cb(null, file.fieldname + '-' + Date.now() + '.jpg');
+    }
+});
+var upload = multer({ storage: storage });
 
 router.use(function(req, res, next){
 	//console.log(req.files);
@@ -30,15 +39,11 @@ router.param('location', function(req, res, next, location) {
 	next();	
 });
 
-router.post('/:username/uploadfile', function(req, res, next) {
-	//console.log(req.files.InputFile.type);
-	var upload = multer({ dest: 'uploads/'});
-	upload.single('InputFile', function(req, res){
-		console.log(req.file);
-		res.redirect('/account/'+req.username+'/editprofile');
-	});
-	
+router.post('/:username/upload', upload.single('InputFile'), function(req, res, next){
+    var file = req.file;
+    res.send({ret_code: '0'});
 });
+
 
 router.get('/:username/information', function(req, res, next) {
 	//console.log(req.recent);
